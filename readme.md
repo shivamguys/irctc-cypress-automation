@@ -4,20 +4,9 @@
 
 
 ### Preview
-#### First 20 Seconds
+####  [Watch the video here](https://i.imgur.com/3U8yKmb.mp4)
 
-![](https://j.gifs.com/28pzjW.gif)
-
-
-#### Next 20 Seconds
-
-
-![](https://j.gifs.com/36qBk9.gif)
-
-
-#### Next 20 Seconds
-
-![](https://j.gifs.com/46rElk.gif)
+[![](https://imgur.com/0xFTYhk.png)](https://i.imgur.com/3U8yKmb.mp4)
 
 
 
