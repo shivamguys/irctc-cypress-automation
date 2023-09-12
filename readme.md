@@ -6,7 +6,7 @@
 ### Preview
 ####  [Watch the video here](https://i.imgur.com/3U8yKmb.mp4)
 
-[![](https://imgur.com/0xFTYhk.png)](https://i.imgur.com/3U8yKmb.mp4)
+[![](https://j.gifs.com/28pzjW.gif)](https://j.gifs.com/28pzjW.gif)
 
 
 
