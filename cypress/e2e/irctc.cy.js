@@ -31,31 +31,34 @@ function formatDate(inputDate) {
   return 'Invalid Date';
 }
 
-describe('IRCTC BOOKING BEGINS', () => {
-  it('passes', () => {
-    cy.viewport(1680, 1200)
+describe('IRCTC TATKAL BOOKING', () => {
+  it('Tatkal Booking Begins......', () => {
+    cy.viewport(1478, 1056)
     cy.visit('https://www.irctc.co.in/nget/train-search')
     cy.get('.h_head1 > .search_btn').click()
     cy.get(':nth-child(1) > .form-control').type(username)
     cy.get(':nth-child(2) > .form-control').type(password)
 
+
+    // Submiting captcha block starts........
     cy.submitCaptcha().then(() => {
 
 
-      // from 
+      // from station
       cy.get('.ui-autocomplete > .ng-tns-c57-8').type(SOURCE_STATION)
       cy.wait(600)
       cy.get('#p-highlighted-option').click()
 
-      // to
+      // to station
       cy.get('.ui-autocomplete > .ng-tns-c57-9').type(DESTINATION_STATION)
       cy.wait(600)
       cy.get('#p-highlighted-option').click()
 
       // date
       cy.get('.ui-calendar').click()
-      // cy.get('.ui-calendar').type('16/09/2023').clear()
+      // clearing the default date which is prefilled in the box
       cy.focused().clear()
+      // filling the date
       cy.get('.ui-calendar').type(TRAVEL_DATE)
 
 
@@ -69,13 +72,18 @@ describe('IRCTC BOOKING BEGINS', () => {
 
       // search button
       cy.get('.col-md-3 > .search_btn').click()
-      // close disha banner
-      cy.get('#disha-banner-close').click()
 
+
+      // @@@@@ commenting this as IRCTC by default minimizes this now @@@@@
+      // close disha banner
+      // cy.get('#disha-banner-close').click()
+
+      // iterating each div block to find our train div block starts.....
       cy.get(':nth-child(n) > .bull-back').each((div, index) => {
 
-        // confirming we click on same train no and seat class div
+        // confirming we click on same train no and seat class div if block starts.....
         if (div[0].innerText.includes(TRAIN_NO) && div[0].innerText.includes(TRAIN_COACH)) {
+          // wrapping it so div becomes clickable and we can perform furthur operations
           cy.wrap(div).contains(TRAIN_COACH).click()
 
           cy.get(`:nth-child(${index + 1}) > .bull-back > app-train-avl-enq > :nth-child(1) > :nth-child(7) > :nth-child(1)`).contains(formatDate(TRAVEL_DATE)).click()
@@ -83,35 +91,35 @@ describe('IRCTC BOOKING BEGINS', () => {
 
           cy.bookUntilTatkalGetsOpen(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO).then(() => {
 
-            console.log('*********8')
+            console.log('TATKAL TIME STARTED......')
           })
 
 
           // this is to ensure that Form Page has been opened up so untill it fetches it all other execution would be blocked
           cy.get('#ui-panel-12-titlebar >')
 
-          // Nvigating cursor click to some blank non clickable space in page so that clicking add passenger should work
+          // Navigating cursor click to some blank non clickable space in page so that clicking add passenger should work
           cy.get('.fill > :nth-child(2)').click()
 
 
-          // for more passenger we click on add passenger block starts
+          // for more passenger we click on add passenger block starts.....
           for (let i = 0; i < PASSENGER_DETAILS.length; i++) {
 
+            // if i>0 means more than 1 passenger then click Add Passenger div
             if (i > 0) {
-
               cy.get('.pull-left > a > :nth-child(1)').click()
-              console.log(i, PASSENGER_DETAILS.length, 'Clicked->>>>>>>>>>>>>>>>>>>>>')
             }
 
 
           }
-          // for more passenger we click on add passenger block ends
+          // for more passenger we click on add passenger block ends....
 
 
 
 
           // this is to ensure that Form Page has been opened up so untill it fetches it all other execution would be blocked
           cy.get('#ui-panel-12-titlebar >')
+
           // FOR NAME 
           cy.get('.ui-autocomplete >').each((inputdiv, index) => {
 
@@ -151,7 +159,7 @@ describe('IRCTC BOOKING BEGINS', () => {
           })
 
 
-          // Choosing UPI As Payment Option 
+          // Choosing UPI As Payment Option while filling passenger details
           cy.get('#\\32  > .ui-radiobutton > .ui-radiobutton-box').click()
 
           // Proceed to NEXT STEP Final Confirmation 
@@ -182,16 +190,22 @@ describe('IRCTC BOOKING BEGINS', () => {
 
 
         }
+        // confirming we click on same train no and seat class div if block ends......
+
 
 
 
       })
+      // iterating each div block to find our train div block ends.....
+
 
 
 
 
 
     })
+    // Submiting captcha block ends........
+
 
 
 

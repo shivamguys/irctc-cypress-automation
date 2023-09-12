@@ -58,12 +58,12 @@ function formatDate(inputDate) {
 function performLogin(LOGGED_IN) {
     // if starts
     if (!LOGGED_IN) {
-        cy.wait(2000)
+        cy.wait(1300)
 
         cy.get('body').then((el) => {
 
             if (el[0].innerText.includes('Logout')) {
-
+                console.log("We have logged in successfully at this stage")
             }
             else if ((el[0].innerText.includes('FORGOT ACCOUNT DETAILS')) && !(el[0].innerText.includes('Please Wait...'))) {
 
@@ -228,13 +228,6 @@ function BOOK_UNTILL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO) {
                 }
 
             })
-
-
-
-
-
-
-
 
 
 
