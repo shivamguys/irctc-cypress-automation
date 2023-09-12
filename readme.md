@@ -1,12 +1,23 @@
 # IRCTC Tatkal Cypress Automation !
 
-### Now book your tatkal tickets at ease by bypassing captcha and filling multiple passenger details at once. Let the script book it for you.
+### Now book your tatkal tickets under 1 min at ease by bypassing captcha and filling multiple passenger details at once. Let the script book it for you.
 
 
 ### Preview
 ####  [Watch the video here](https://i.imgur.com/3U8yKmb.mp4)
 
 [![](https://imgur.com/0xFTYhk.png)](https://i.imgur.com/3U8yKmb.mp4)
+
+
+
+
+## Features it has right now?
+
+- [x] Filling Captchas and retrying untill success
+- [x] Signing in with your username and password
+- [x] Multiple Passenger 
+- [x] Pre filling All Information
+- [x] Payment Gateway Automation(Paying With UPI QR)
 
 
 
