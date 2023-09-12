@@ -77,10 +77,14 @@ describe('IRCTC BOOKING BEGINS', () => {
         // confirming we click on same train no and seat class div
         if (div[0].innerText.includes(TRAIN_NO) && div[0].innerText.includes(TRAIN_COACH)) {
           cy.wrap(div).contains(TRAIN_COACH).click()
+
           cy.get(`:nth-child(${index + 1}) > .bull-back > app-train-avl-enq > :nth-child(1) > :nth-child(7) > :nth-child(1)`).contains(formatDate(TRAVEL_DATE)).click()
           cy.get(`:nth-child(${index + 1}) > .bull-back > app-train-avl-enq > [style="padding-top: 10px; padding-bottom: 20px;"]`).contains('Book Now').click()
 
+          cy.bookUntilTatkalGetsOpen(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO).then(() => {
 
+            console.log('*********8')
+          })
 
 
           // this is to ensure that Form Page has been opened up so untill it fetches it all other execution would be blocked
@@ -93,7 +97,7 @@ describe('IRCTC BOOKING BEGINS', () => {
           // for more passenger we click on add passenger block starts
           for (let i = 0; i < PASSENGER_DETAILS.length; i++) {
 
-            if (i >= 0) {
+            if (i > 0) {
 
               cy.get('.pull-left > a > :nth-child(1)').click()
               console.log(i, PASSENGER_DETAILS.length, 'Clicked->>>>>>>>>>>>>>>>>>>>>')
@@ -106,7 +110,8 @@ describe('IRCTC BOOKING BEGINS', () => {
 
 
 
-
+          // this is to ensure that Form Page has been opened up so untill it fetches it all other execution would be blocked
+          cy.get('#ui-panel-12-titlebar >')
           // FOR NAME 
           cy.get('.ui-autocomplete >').each((inputdiv, index) => {
 

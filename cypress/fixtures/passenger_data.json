@@ -1,7 +1,7 @@
 {
-  "TRAIN_NO": "12318",
+  "TRAIN_NO": "18104",
   "TRAIN_COACH": "SL",
-  "TRAVEL_DATE": "12/09/2023",
+  "TRAVEL_DATE": "13/09/2023",
   "SOURCE_STATION": "UMB",
   "DESTINATION_STATION": "BSB",
   "TATKAL": true,
@@ -11,18 +11,6 @@
       "AGE": 25,
       "GENDER": "Male",
       "SEAT": "Side Upper"
-    },
-    {
-      "NAME": "Rahul PANDEY",
-      "AGE": 29,
-      "GENDER": "Male",
-      "SEAT": "Side Upper"
-    },
-    {
-      "NAME": "Yeshwant PANDEY",
-      "AGE": 35,
-      "GENDER": "Male",
-      "SEAT": "Upper"
     }
   ],
   "__valid_coaches__": "SL | 2A | 3A | 3E | 1A",

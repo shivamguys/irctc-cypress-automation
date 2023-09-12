@@ -20,13 +20,47 @@ Cypress.Commands.add('solveCaptcha', () => {
 })
 
 
+Cypress.Commands.add('bookUntilTatkalGetsOpen', (div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO) => {
+
+    BOOK_UNTILL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO)
+
+})
+
+function formatDate(inputDate) {
+    const months = [
+        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ];
+
+    const parts = inputDate.split('/');
+    if (parts.length === 3) {
+        const day = parseInt(parts[0], 10);
+        const month = parseInt(parts[1], 10);
+        const year = parseInt(parts[2], 10);
+
+        if (!isNaN(day) && !isNaN(month) && !isNaN(year)) {
+            const date = new Date(year, month - 1, day);
+            const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'short' });
+            const dayOfMonth = date.getDate();
+            const monthName = months[date.getMonth()];
+
+            // Add leading zero for single-digit day
+            const formattedDay = dayOfMonth < 10 ? `0${dayOfMonth}` : dayOfMonth;
+
+            return `${dayOfWeek}, ${formattedDay} ${monthName}`;
+        }
+    }
+
+    return 'Invalid Date';
+}
+
+
 function performLogin(LOGGED_IN) {
     // if starts
     if (!LOGGED_IN) {
         cy.wait(2000)
 
         cy.get('body').then((el) => {
-            console.log(el[0].innerText, '<<<<<<<<<<<<<-------------')
 
             if (el[0].innerText.includes('Logout')) {
 
@@ -157,6 +191,70 @@ function solveCaptcha() {
 
 
     })
+
+
+
+
+}
+
+
+
+function BOOK_UNTILL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO) {
+
+
+    cy.wait(2500)
+
+    cy.get('body').then((el) => {
+
+        if (el[0].innerText.includes('Booking not yet started for the selected quota and class')) {
+
+
+            cy.get(':nth-child(n) > .bull-back').each((div, index) => {
+
+                // confirming we click on same train no and seat class div
+                if (div[0].innerText.includes(TRAIN_NO) && div[0].innerText.includes(TRAIN_COACH)) {
+
+                    cy.wrap(div).contains(TRAIN_COACH).click()
+
+                    cy.get(`:nth-child(${index + 1}) > .bull-back > app-train-avl-enq > :nth-child(1) > :nth-child(7) > :nth-child(1)`).contains(formatDate(TRAVEL_DATE)).click()
+                    cy.get(`:nth-child(${index + 1}) > .bull-back > app-train-avl-enq > [style="padding-top: 10px; padding-bottom: 20px;"]`).contains('Book Now').click()
+                    cy.get('.level_1.hidden-xs > app-modify-search > .layer_2 > form.ng-untouched > .col-md-2 > .hidden-xs').click()
+                    BOOK_UNTILL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO)
+
+
+
+
+
+                }
+
+            })
+
+
+
+
+
+
+
+
+
+
+        }
+        else if (el[0].innerText.includes('Passenger Details') && el[0].innerText.includes('Contact Details')) {
+            console.log("TATKAL BOOKING NOW OPEN....STARTING FURTHUR PROCESS")
+
+        }
+        else {
+
+            BOOK_UNTILL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO)
+
+
+        }
+
+
+
+
+    })
+
 
 
 
