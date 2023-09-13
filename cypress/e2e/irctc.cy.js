@@ -96,7 +96,8 @@ describe('IRCTC TATKAL BOOKING', () => {
 
 
           // this is to ensure that Form Page has been opened up so untill it fetches it all other execution would be blocked
-          cy.get('#ui-panel-12-titlebar >')
+          cy.get('.dull-back.train-Header')
+          // cy.get('#ui-panel-12-titlebar >')
 
           // Navigating cursor click to some blank non clickable space in page so that clicking add passenger should work
           cy.get('.fill > :nth-child(2)').click()
@@ -118,7 +119,9 @@ describe('IRCTC TATKAL BOOKING', () => {
 
 
           // this is to ensure that Form Page has been opened up so untill it fetches it all other execution would be blocked
-          cy.get('#ui-panel-12-titlebar >')
+          // cy.get('#ui-panel-12-titlebar >')
+          cy.get('.dull-back.train-Header')
+
 
           // FOR NAME 
           cy.get('.ui-autocomplete >').each((inputdiv, index) => {
@@ -176,6 +179,20 @@ describe('IRCTC TATKAL BOOKING', () => {
 
             // Clicking Pay And book
             cy.get('.btn').click()
+
+
+            cy.intercept("/theia/processTransaction?orderid=*").as("payment")
+
+            // ...
+            // https://securegw.paytm.in/theia/processTransaction?orderid=100004437462426
+
+            cy.wait("@payment").then((interception) => {
+              cy.log(interception)
+              console.log(interception.response.body)
+            })
+
+
+
 
           })
 

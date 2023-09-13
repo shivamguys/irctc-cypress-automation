@@ -202,37 +202,51 @@ function solveCaptcha() {
 function BOOK_UNTILL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO) {
 
 
-    cy.wait(2500)
+    cy.wait(1900)
 
     cy.get('body').then((el) => {
 
-        if (el[0].innerText.includes('Booking not yet started for the selected quota and class')) {
+        if (el[0].innerText.includes('Booking not yet started for the selected quota and class') && !(el[0].innerText.includes('Please Wait...'))) {
+
+            cy.get('.level_1.hidden-xs > app-modify-search > .layer_2 > form.ng-untouched > .col-md-2 > .hidden-xs').click()
 
 
-            cy.get(':nth-child(n) > .bull-back').each((div, index) => {
+            // Another layer of protection from breaking up the code
+            // we again check the body are we at any loading phase as in loading phase content becomes visible but div
+            // not active to click it
+            // body fetch block starts............
+            cy.get('body').then((el) => {
 
-                // confirming we click on same train no and seat class div
-                if (div[0].innerText.includes(TRAIN_NO) && div[0].innerText.includes(TRAIN_COACH)) {
+                if (el[0].innerText.includes('Booking not yet started for the selected quota and class') && !(el[0].innerText.includes('Please Wait...'))) {
 
-                    cy.wrap(div).contains(TRAIN_COACH).click()
+                    // iterating each block div of available trains starts here.....
+                    cy.get(':nth-child(n) > .bull-back').each((div, index) => {
 
-                    cy.get(`:nth-child(${index + 1}) > .bull-back > app-train-avl-enq > :nth-child(1) > :nth-child(7) > :nth-child(1)`).contains(formatDate(TRAVEL_DATE)).click()
-                    cy.get(`:nth-child(${index + 1}) > .bull-back > app-train-avl-enq > [style="padding-top: 10px; padding-bottom: 20px;"]`).contains('Book Now').click()
-                    cy.get('.level_1.hidden-xs > app-modify-search > .layer_2 > form.ng-untouched > .col-md-2 > .hidden-xs').click()
-                    BOOK_UNTILL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO)
+                        // confirming we click on same train no and seat class div
+                        if (div[0].innerText.includes(TRAIN_NO) && div[0].innerText.includes(TRAIN_COACH)) {
 
+                            cy.wrap(div).contains(TRAIN_COACH).click()
+                            cy.get(`:nth-child(${index + 1}) > .bull-back > app-train-avl-enq > :nth-child(1) > :nth-child(7) > :nth-child(1)`).contains(formatDate(TRAVEL_DATE)).click()
+                            cy.get(`:nth-child(${index + 1}) > .bull-back > app-train-avl-enq > [style="padding-top: 10px; padding-bottom: 20px;"]`).contains('Book Now').click()
+                            BOOK_UNTILL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO)
 
+                        }
 
-
+                    })
+                    // iterating each block div of available trains ends here.....
 
                 }
+                else {
+                    BOOK_UNTILL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO)
 
+                }
             })
+            // body fetch block ends............
 
 
 
         }
-        else if (el[0].innerText.includes('Passenger Details') && el[0].innerText.includes('Contact Details')) {
+        else if (el[0].innerText.includes('Passenger Details') && el[0].innerText.includes('Contact Details') && !(el[0].innerText.includes('Please Wait...'))) {
             console.log("TATKAL BOOKING NOW OPEN....STARTING FURTHUR PROCESS")
 
         }
