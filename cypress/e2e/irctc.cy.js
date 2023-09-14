@@ -154,11 +154,22 @@ describe('IRCTC TATKAL BOOKING', () => {
           })
 
           // FOR PASSENGER SEAT
-          cy.get('.Layer_7.ng-star-inserted > .form-control').each((inputdiv, index) => {
+          cy.get('.container-fluid > :nth-child(1) > :nth-child(2) > .form-control').each((inputdiv, index) => {
 
             let PASSENGER = PASSENGER_DETAILS[index]
             cy.wrap(inputdiv).select(PASSENGER['SEAT'])
 
+          })
+
+
+          cy.get('body').then((el) => {
+
+            if (el[0].innerText.includes('Food Choice') && !(el[0].innerText.includes('Please Wait...'))) {
+
+              cy.get('.container-fluid > :nth-child(1) > :nth-child(3) > .form-control').select('No Food')
+
+
+            }
           })
 
 
