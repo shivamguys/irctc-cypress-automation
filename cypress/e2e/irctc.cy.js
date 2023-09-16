@@ -197,7 +197,7 @@ describe('IRCTC TATKAL BOOKING', () => {
             // ...
             // https://securegw.paytm.in/theia/processTransaction?orderid=100004437462426
 
-            cy.wait("@payment").then((interception) => {
+            cy.wait("@payment",{timeout: 200000}).then((interception) => {
               cy.log(interception)
               console.log(interception.response.body)
             })
