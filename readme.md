@@ -2,8 +2,14 @@
 
 ### Now book your tatkal tickets under 1 min at ease by bypassing captcha and filling multiple passenger details at once. Let the script book it for you.
 
+[![IRCTC Automation](https://img.shields.io/endpoint?url=https://cloud.cypress.io/badge/simple/7afdkj/main&style=for-the-badge&logo=cypress)](https://cloud.cypress.io/projects/7afdkj/runs)
 
-### Preview
+[![IRCTC Automation](https://img.shields.io/endpoint?url=https://cloud.cypress.io/badge/detailed/7afdkj/main&style=for-the-badge&logo=cypress)](https://cloud.cypress.io/projects/7afdkj/runs)
+
+### See the recording of all the runs at tatkal time here....
+####  [Sneak Peek into the runs here...](https://cloud.cypress.io/projects/7afdkj/runs)
+
+### Watch the simple recording here....
 ####  [Watch the video here](https://i.imgur.com/3U8yKmb.mp4)
 
 [![](https://imgur.com/0xFTYhk.png)](https://i.imgur.com/3U8yKmb.mp4)
