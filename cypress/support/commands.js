@@ -1,6 +1,13 @@
+import { formatDate } from "../utils";
 
 const BASE_URL = Cypress.env('BASE_URL')
 
+
+Cypress.on('uncaught:exception', (err, runnable) => {
+    // returning false here prevents Cypress from
+    // failing the test
+    return false
+})
 
 Cypress.Commands.add('submitCaptcha', () => {
 
@@ -22,38 +29,9 @@ Cypress.Commands.add('solveCaptcha', () => {
 
 Cypress.Commands.add('bookUntilTatkalGetsOpen', (div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO) => {
 
-    BOOK_UNTILL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO)
+    BOOK_UNTIL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO)
 
 })
-
-function formatDate(inputDate) {
-    const months = [
-        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-    ];
-
-    const parts = inputDate.split('/');
-    if (parts.length === 3) {
-        const day = parseInt(parts[0], 10);
-        const month = parseInt(parts[1], 10);
-        const year = parseInt(parts[2], 10);
-
-        if (!isNaN(day) && !isNaN(month) && !isNaN(year)) {
-            const date = new Date(year, month - 1, day);
-            const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'short' });
-            const dayOfMonth = date.getDate();
-            const monthName = months[date.getMonth()];
-
-            // Add leading zero for single-digit day
-            const formattedDay = dayOfMonth < 10 ? `0${dayOfMonth}` : dayOfMonth;
-
-            return `${dayOfWeek}, ${formattedDay} ${monthName}`;
-        }
-    }
-
-    return 'Invalid Date';
-}
-
 
 function performLogin(LOGGED_IN) {
     // if starts
@@ -135,7 +113,11 @@ function solveCaptcha() {
     cy.wait(1200)
     cy.get('body').then((el) => {
 
-        // Check wether we are at reviewBooking stage or not if yes keep on solving captcha
+        if (el[0].innerText.includes('No seats available')) {
+            cy.fail('Further execution stopped because there are no more tickets.');
+        }
+
+        // Check whether we are at reviewBooking stage or not if yes keep on solving captcha
         if (el[0].innerText.includes('Your ticket will be sent to') && !(el[0].innerText.includes('Please Wait...'))) {
 
 
@@ -175,7 +157,7 @@ function solveCaptcha() {
             });
             // get captcha value base64 ends---------
 
-            // recusrsing untill captcha gets solved
+            // recursing until captcha gets solved
             solveCaptcha()
 
         }
@@ -199,7 +181,7 @@ function solveCaptcha() {
 
 
 
-function BOOK_UNTILL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO) {
+function BOOK_UNTIL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO) {
 
 
     cy.wait(1900)
@@ -228,7 +210,7 @@ function BOOK_UNTILL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO) {
                             cy.wrap(div).contains(TRAIN_COACH).click()
                             cy.get(`:nth-child(${index + 1}) > .bull-back > app-train-avl-enq > :nth-child(1) > :nth-child(7) > :nth-child(1)`).contains(formatDate(TRAVEL_DATE)).click()
                             cy.get(`:nth-child(${index + 1}) > .bull-back > app-train-avl-enq > [style="padding-top: 10px; padding-bottom: 20px;"]`).contains('Book Now').click()
-                            BOOK_UNTILL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO)
+                            BOOK_UNTIL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO)
 
                         }
 
@@ -237,7 +219,7 @@ function BOOK_UNTILL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO) {
 
                 }
                 else {
-                    BOOK_UNTILL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO)
+                    BOOK_UNTIL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO)
 
                 }
             })
@@ -247,7 +229,7 @@ function BOOK_UNTILL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO) {
 
         }
         else if (el[0].innerText.includes('Passenger Details') && el[0].innerText.includes('Contact Details') && !(el[0].innerText.includes('Please Wait...'))) {
-            console.log("TATKAL BOOKING NOW OPEN....STARTING FURTHUR PROCESS")
+            console.log("TATKAL BOOKING NOW OPEN....STARTING FURTHER PROCESS")
 
         }
         else if (!(el[0].innerText.includes('Passenger Details')) && !(el[0].innerText.includes('Contact Details')) && !(el[0].innerText.includes('Please Wait...'))) {
@@ -263,7 +245,7 @@ function BOOK_UNTILL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO) {
                         cy.wrap(div).contains(TRAIN_COACH).click()
                         cy.get(`:nth-child(${index + 1}) > .bull-back > app-train-avl-enq > :nth-child(1) > :nth-child(7) > :nth-child(1)`).contains(formatDate(TRAVEL_DATE)).click()
                         cy.get(`:nth-child(${index + 1}) > .bull-back > app-train-avl-enq > [style="padding-top: 10px; padding-bottom: 20px;"]`).contains('Book Now').click()
-                        BOOK_UNTILL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO)
+                        BOOK_UNTIL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO)
 
                     }
 
@@ -279,7 +261,7 @@ function BOOK_UNTILL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO) {
         }
         else {
 
-            BOOK_UNTILL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO)
+            BOOK_UNTIL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO)
 
 
         }

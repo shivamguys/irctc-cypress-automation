@@ -1,2 +1,4 @@
 node_modules/
 cypress.env.json
+irctc-captcha-solve-server/captcha.png
+.idea

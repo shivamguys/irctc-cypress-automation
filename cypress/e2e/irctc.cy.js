@@ -1,46 +1,19 @@
+import { formatDate } from "../utils";
+
 let username = Cypress.env('username')
 let password = Cypress.env('password')
 import { PASSENGER_DETAILS, SOURCE_STATION, DESTINATION_STATION, TRAIN_NO, TRAIN_COACH, TRAVEL_DATE, TATKAL } from '../fixtures/passenger_data.json'
-
-
-function formatDate(inputDate) {
-  const months = [
-    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-    'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-  ];
-
-  const parts = inputDate.split('/');
-  if (parts.length === 3) {
-    const day = parseInt(parts[0], 10);
-    const month = parseInt(parts[1], 10);
-    const year = parseInt(parts[2], 10);
-
-    if (!isNaN(day) && !isNaN(month) && !isNaN(year)) {
-      const date = new Date(year, month - 1, day);
-      const dayOfWeek = date.toLocaleDateString('en-US', { weekday: 'short' });
-      const dayOfMonth = date.getDate();
-      const monthName = months[date.getMonth()];
-
-      // Add leading zero for single-digit day
-      const formattedDay = dayOfMonth < 10 ? `0${dayOfMonth}` : dayOfMonth;
-
-      return `${dayOfWeek}, ${formattedDay} ${monthName}`;
-    }
-  }
-
-  return 'Invalid Date';
-}
 
 describe('IRCTC TATKAL BOOKING', () => {
   it('Tatkal Booking Begins......', () => {
     cy.viewport(1478, 1056)
     cy.visit('https://www.irctc.co.in/nget/train-search')
     cy.get('.h_head1 > .search_btn').click()
-    cy.get(':nth-child(1) > .form-control').type(username)
-    cy.get(':nth-child(2) > .form-control').type(password)
+    cy.get(':nth-child(1) > .form-control').invoke('val', username).trigger('input')
+    cy.get(':nth-child(2) > .form-control').invoke('val', password).trigger('input')
 
 
-    // Submiting captcha block starts........
+    // Submitting captcha block starts........
     cy.submitCaptcha().then(() => {
 
 
@@ -65,7 +38,7 @@ describe('IRCTC TATKAL BOOKING', () => {
       // TATKAL or NORMAL BOOKING
       if (TATKAL) {
         cy.get('#journeyQuota > .ui-dropdown').click()
-        cy.get(':nth-child(5) > .ui-dropdown-item').click()
+        cy.get(':nth-child(6) > .ui-dropdown-item').click()
 
       }
 
@@ -83,7 +56,7 @@ describe('IRCTC TATKAL BOOKING', () => {
 
         // confirming we click on same train no and seat class div if block starts.....
         if (div[0].innerText.includes(TRAIN_NO) && div[0].innerText.includes(TRAIN_COACH)) {
-          // wrapping it so div becomes clickable and we can perform furthur operations
+          // wrapping it so div becomes clickable and we can perform further operations
           cy.wrap(div).contains(TRAIN_COACH).click()
 
           cy.get(`:nth-child(${index + 1}) > .bull-back > app-train-avl-enq > :nth-child(1) > :nth-child(7) > :nth-child(1)`).contains(formatDate(TRAVEL_DATE)).click()
@@ -95,7 +68,7 @@ describe('IRCTC TATKAL BOOKING', () => {
           })
 
 
-          // this is to ensure that Form Page has been opened up so untill it fetches it all other execution would be blocked
+          // this is to ensure that Form Page has been opened up so until it fetches it all other execution would be blocked
           cy.get('.dull-back.train-Header')
           // cy.get('#ui-panel-12-titlebar >')
 
@@ -118,60 +91,63 @@ describe('IRCTC TATKAL BOOKING', () => {
 
 
 
-          // this is to ensure that Form Page has been opened up so untill it fetches it all other execution would be blocked
+          // this is to ensure that Form Page has been opened up so until it fetches it all other execution would be blocked
           // cy.get('#ui-panel-12-titlebar >')
           cy.get('.dull-back.train-Header')
 
 
-          // FOR NAME 
-          cy.get('.ui-autocomplete >').each((inputdiv, index) => {
+          // FOR NAME
+          cy.get('.ui-autocomplete >').each((inputDiv, index) => {
 
-            cy.wrap(inputdiv).click()
-            cy.wrap(inputdiv).focused().clear()
+            cy.wrap(inputDiv).click()
+            cy.wrap(inputDiv).focused().clear()
             let PASSENGER = PASSENGER_DETAILS[index]
-            cy.wrap(inputdiv).type(PASSENGER.NAME)
+            cy.wrap(inputDiv).invoke('val', PASSENGER['NAME']).trigger('input')
 
 
 
           })
 
           // FOR AGE
-          cy.get('.col-sm-1 > .form-control').each((inputdiv, index) => {
+          cy.get('input[formcontrolname="passengerAge"]').each((inputDiv, index) => {
 
-            cy.wrap(inputdiv).click()
-            cy.wrap(inputdiv).focused().clear()
+            cy.wrap(inputDiv).click()
+            cy.wrap(inputDiv).focused().clear()
             let PASSENGER = PASSENGER_DETAILS[index]
 
-            cy.wrap(inputdiv).type(PASSENGER['AGE'])
+            cy.wrap(inputDiv).invoke('val',PASSENGER['AGE']).trigger('input')
 
           })
 
           // FOR GENDER
-          cy.get('.col-sm-2 > .form-control').each((inputdiv, index) => {
+          cy.get('select[formcontrolname="passengerGender"]').each((inputDiv, index) => {
 
             let PASSENGER = PASSENGER_DETAILS[index]
-            cy.wrap(inputdiv).select(PASSENGER['GENDER'])
+            cy.wrap(inputDiv).select(PASSENGER['GENDER'])
           })
 
           // FOR PASSENGER SEAT
-          cy.get('.container-fluid > :nth-child(1) > :nth-child(2) > .form-control').each((inputdiv, index) => {
+          cy.get('select[formcontrolname="passengerBerthChoice"]').each((inputDiv, index) => {
 
             let PASSENGER = PASSENGER_DETAILS[index]
-            cy.wrap(inputdiv).select(PASSENGER['SEAT'])
+            cy.wrap(inputDiv).select(PASSENGER['SEAT'])
 
           })
 
 
-          cy.get('body').then((el) => {
+          // FOR PASSENGER FOOD CHOICE
+          cy.get('select[formcontrolname="passengerFoodChoice"]').then(($select) => {
+            if ($select.length > 0) {
 
-            if (el[0].innerText.includes('Food Choice') && !(el[0].innerText.includes('Please Wait...'))) {
+              $select.each((index, inputDiv) => {
 
-              cy.get('.container-fluid > :nth-child(1) > :nth-child(3) > .form-control').select('No Food')
+                let PASSENGER = PASSENGER_DETAILS[index];
+                cy.wrap(inputDiv).select(PASSENGER['FOOD']);
 
+              });
 
             }
-          })
-
+          });
 
           // Choosing UPI As Payment Option while filling passenger details
           cy.get('#\\32  > .ui-radiobutton > .ui-radiobutton-box').click()
@@ -232,7 +208,7 @@ describe('IRCTC TATKAL BOOKING', () => {
 
 
     })
-    // Submiting captcha block ends........
+    // Submitting captcha block ends........
 
 
 
