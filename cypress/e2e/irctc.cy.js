@@ -136,18 +136,16 @@ describe('IRCTC TATKAL BOOKING', () => {
 
 
           // FOR PASSENGER FOOD CHOICE
-          cy.get('select[formcontrolname="passengerFoodChoice"]').then(($select) => {
-            if ($select.length > 0) {
-
-              $select.each((index, inputDiv) => {
+          cy.get('body').then((body) => {
+            if (body.find('select[formcontrolname="passengerFoodChoice"]').length > 0) {
+              cy.get('select[formcontrolname="passengerFoodChoice"]').each((inputDiv) => {
 
                 let PASSENGER = PASSENGER_DETAILS[index];
                 cy.wrap(inputDiv).select(PASSENGER['FOOD']);
 
               });
-
             }
-          });
+          })
 
           // Choosing UPI As Payment Option while filling passenger details
           cy.get('#\\32  > .ui-radiobutton > .ui-radiobutton-box').click()
