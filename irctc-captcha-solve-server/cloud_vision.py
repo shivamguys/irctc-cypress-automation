@@ -17,7 +17,7 @@ def detect_text(path):
     # print(texts, "<----------")
     for text in texts:
         print(text.description)
-        return text.description
+        return text.description.replace(" ", "")
     if response.error.message:
         raise Exception(
             "{}\nFor more info on error messages, check: "

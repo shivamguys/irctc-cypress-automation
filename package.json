@@ -9,6 +9,7 @@
   "author": "SHivam Pandey",
   "license": "ISC",
   "devDependencies": {
-    "cypress": "^13.0.0"
+    "cypress": "^13.0.0",
+    "dayjs": "^1.11.10"
   }
 }

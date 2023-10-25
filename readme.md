@@ -44,7 +44,8 @@
       "NAME": "SHIVAM PANDEY",
       "AGE": 25,
       "GENDER": "Male",
-      "SEAT": "Side Upper"
+      "SEAT": "Side Upper",
+      "FOOD" "No Food"
     }
   ],
 
@@ -55,9 +56,10 @@
 
 ***
 ```
-  "__valid_coaches__": "SL | 2A | 3A | 3E | 1A",
-  "__valid_seats__": "Lower| Middle | Upper| Side Lower | Side Upper",
-  "__valid_genders__": "Male|Female|Transgender"
+"__valid_coaches__": "SL | 2A | 3A | 3E | 1A | CC | EC | 2S",
+"__valid_seats__": "Lower | Middle | Upper | Side Lower | Side Upper | Window Side | No Preference",
+"__valid_genders__": "Male | Female | Transgender",
+"__valid_food_choices__": "Veg | Non Veg | No Food"
 
 ```
 ***
