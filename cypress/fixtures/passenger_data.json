@@ -1,15 +1,22 @@
 {
-  "TRAIN_NO": "18104",
-  "TRAIN_COACH": "SL",
-  "TRAVEL_DATE": "13/09/2023",
-  "SOURCE_STATION": "UMB",
-  "DESTINATION_STATION": "BSB",
+  "TRAIN_NO": "12926",
+  "TRAIN_COACH": "3A",
+  "TRAVEL_DATE": "01/11/2023",
+  "SOURCE_STATION": "CDG",
+  "DESTINATION_STATION": "MTJ",
   "TATKAL": true,
   "PASSENGER_DETAILS": [
     {
       "NAME": "SHIVAM PANDEY",
       "AGE": 25,
       "GENDER": "Male",
+      "SEAT": "Side Lower",
+      "FOOD": "No Food"
+    },
+    {
+      "NAME": "RACHNA BHAGAT",
+      "AGE": 26,
+      "GENDER": "Female",
       "SEAT": "Side Upper",
       "FOOD": "No Food"
     }

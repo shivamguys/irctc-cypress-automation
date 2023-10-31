@@ -215,3 +215,4 @@ describe('IRCTC TATKAL BOOKING', () => {
 
   })
 })
+// chrome://settings/content/siteDetails?site=https%3A%2F%2Fsecuregw.paytm.in
