@@ -99,7 +99,7 @@ describe('IRCTC TATKAL BOOKING', () => {
           if(BOARDING_STATION) {
 
             cy.get('.ui-dropdown.ui-widget.ui-corner-all').click()
-            cy.contains('li', BOARDING_STATION)
+            cy.contains('li.ui-dropdown-item', BOARDING_STATION)
               .then((li) => {
                 cy.wrap(li).click();
               });
