@@ -37,6 +37,7 @@
   "TRAIN_COACH": "SL",
   "TRAVEL_DATE": "12/09/2023",
   "SOURCE_STATION": "UMB",
+  "BOARDING_STATION": null, <-- Change to full station name if required, else leave null
   "DESTINATION_STATION": "BSB",
   "TATKAL": true,
   "PASSENGER_DETAILS": [

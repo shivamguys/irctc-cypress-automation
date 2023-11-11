@@ -2,7 +2,7 @@ import { formatDate } from "../utils";
 
 let username = Cypress.env('username')
 let password = Cypress.env('password')
-import { PASSENGER_DETAILS, SOURCE_STATION, DESTINATION_STATION, TRAIN_NO, TRAIN_COACH, TRAVEL_DATE, TATKAL } from '../fixtures/passenger_data.json'
+import { PASSENGER_DETAILS, SOURCE_STATION, DESTINATION_STATION, TRAIN_NO, TRAIN_COACH, TRAVEL_DATE, TATKAL, BOARDING_STATION } from '../fixtures/passenger_data.json'
 
 describe('IRCTC TATKAL BOOKING', () => {
   it('Tatkal Booking Begins......', () => {
@@ -95,6 +95,16 @@ describe('IRCTC TATKAL BOOKING', () => {
           // cy.get('#ui-panel-12-titlebar >')
           cy.get('.dull-back.train-Header')
 
+          // FOR BOARDING STATION CHANGE
+          if(BOARDING_STATION) {
+
+            cy.get('.ui-dropdown.ui-widget.ui-corner-all').click()
+            cy.contains('li', BOARDING_STATION)
+              .then((li) => {
+                cy.wrap(li).click();
+              });
+
+          }
 
           // FOR NAME
           cy.get('.ui-autocomplete >').each((inputDiv, index) => {
