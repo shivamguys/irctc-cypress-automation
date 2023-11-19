@@ -64,15 +64,18 @@
 
 ```
 ***
-- You can add multiple passenger object in **PASSENGER_DETAILS***
+- You can add multiple passenger object in `PASSENGER_DETAILS`
 
-- Configure **Username** , **password** in **cypress.env.json**
+- Configure `username` , `password` in `cypress.env.json`
+
+- If you wish to enter CAPTCHA manually, then change `MANUAL_CAPTCHA` to `true`
 
 ```
 {
     "username": "yourusername",
     "password": "yourpassword",
-    "BASE_URL": "http://127.0.0.1:5000/"
+    "BASE_URL": "http://127.0.0.1:5000/",
+    "MANUAL_CAPTCHA": false
 }
 ```
 
