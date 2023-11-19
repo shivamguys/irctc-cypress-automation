@@ -56,17 +56,10 @@ describe('IRCTC TATKAL BOOKING', () => {
 
         // confirming we click on same train no and seat class div if block starts.....
         if (div[0].innerText.includes(TRAIN_NO) && div[0].innerText.includes(TRAIN_COACH)) {
-          // wrapping it so div becomes clickable and we can perform further operations
-          cy.wrap(div).contains(TRAIN_COACH).click()
 
-          cy.get(`:nth-child(${index + 1}) > .bull-back > app-train-avl-enq > :nth-child(1) > :nth-child(7) > :nth-child(1)`).contains(formatDate(TRAVEL_DATE)).click()
-          cy.get(`:nth-child(${index + 1}) > .bull-back > app-train-avl-enq > [style="padding-top: 10px; padding-bottom: 20px;"]`).contains('Book Now').click()
-
-          cy.bookUntilTatkalGetsOpen(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO).then(() => {
-
+          cy.bookUntilTatkalGetsOpen(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO, TATKAL).then(() => {
             console.log('TATKAL TIME STARTED......')
           })
-
 
           // this is to ensure that Form Page has been opened up so until it fetches it all other execution would be blocked
           cy.get('.dull-back.train-Header')
@@ -148,7 +141,7 @@ describe('IRCTC TATKAL BOOKING', () => {
           // FOR PASSENGER FOOD CHOICE
           cy.get('body').then((body) => {
             if (body.find('select[formcontrolname="passengerFoodChoice"]').length > 0) {
-              cy.get('select[formcontrolname="passengerFoodChoice"]').each((inputDiv) => {
+              cy.get('select[formcontrolname="passengerFoodChoice"]').each((inputDiv, index) => {
 
                 let PASSENGER = PASSENGER_DETAILS[index];
                 cy.wrap(inputDiv).select(PASSENGER['FOOD']);
