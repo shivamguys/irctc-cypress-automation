@@ -2,7 +2,7 @@ import { formatDate } from "../utils";
 
 let username = Cypress.env('username')
 let password = Cypress.env('password')
-import { PASSENGER_DETAILS, SOURCE_STATION, DESTINATION_STATION, TRAIN_NO, TRAIN_COACH, TRAVEL_DATE, TATKAL } from '../fixtures/passenger_data.json'
+import { PASSENGER_DETAILS, SOURCE_STATION, DESTINATION_STATION, TRAIN_NO, TRAIN_COACH, TRAVEL_DATE, TATKAL, BOARDING_STATION } from '../fixtures/passenger_data.json'
 
 describe('IRCTC TATKAL BOOKING', () => {
   it('Tatkal Booking Begins......', () => {
@@ -56,17 +56,10 @@ describe('IRCTC TATKAL BOOKING', () => {
 
         // confirming we click on same train no and seat class div if block starts.....
         if (div[0].innerText.includes(TRAIN_NO) && div[0].innerText.includes(TRAIN_COACH)) {
-          // wrapping it so div becomes clickable and we can perform further operations
-          cy.wrap(div).contains(TRAIN_COACH).click()
 
-          cy.get(`:nth-child(${index + 1}) > .bull-back > app-train-avl-enq > :nth-child(1) > :nth-child(7) > :nth-child(1)`).contains(formatDate(TRAVEL_DATE)).click()
-          cy.get(`:nth-child(${index + 1}) > .bull-back > app-train-avl-enq > [style="padding-top: 10px; padding-bottom: 20px;"]`).contains('Book Now').click()
-
-          cy.bookUntilTatkalGetsOpen(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO).then(() => {
-
+          cy.bookUntilTatkalGetsOpen(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO, TATKAL).then(() => {
             console.log('TATKAL TIME STARTED......')
           })
-
 
           // this is to ensure that Form Page has been opened up so until it fetches it all other execution would be blocked
           cy.get('.dull-back.train-Header')
@@ -95,6 +88,16 @@ describe('IRCTC TATKAL BOOKING', () => {
           // cy.get('#ui-panel-12-titlebar >')
           cy.get('.dull-back.train-Header')
 
+          // FOR BOARDING STATION CHANGE
+          if(BOARDING_STATION) {
+
+            cy.get('.ui-dropdown.ui-widget.ui-corner-all').click()
+            cy.contains('li.ui-dropdown-item', BOARDING_STATION)
+              .then((li) => {
+                cy.wrap(li).click();
+              });
+
+          }
 
           // FOR NAME
           cy.get('.ui-autocomplete >').each((inputDiv, index) => {
@@ -138,7 +141,7 @@ describe('IRCTC TATKAL BOOKING', () => {
           // FOR PASSENGER FOOD CHOICE
           cy.get('body').then((body) => {
             if (body.find('select[formcontrolname="passengerFoodChoice"]').length > 0) {
-              cy.get('select[formcontrolname="passengerFoodChoice"]').each((inputDiv) => {
+              cy.get('select[formcontrolname="passengerFoodChoice"]').each((inputDiv, index) => {
 
                 let PASSENGER = PASSENGER_DETAILS[index];
                 cy.wrap(inputDiv).select(PASSENGER['FOOD']);
