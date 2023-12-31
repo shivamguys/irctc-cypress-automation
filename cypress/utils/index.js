@@ -20,7 +20,7 @@ export const tatkalOpenTimings = {
 
 export const hasTatkalAlreadyOpened = (TRAIN_COACH) => {
     const openTime = tatkalOpenTimings[TRAIN_COACH]
-    const targetTime = dayjs(openTime, 'HH:mm:ss')
+    const targetTime = dayjs(openTime, 'HH:mm')
     const currentTime = dayjs()
     return currentTime.isAfter(targetTime);
 }
