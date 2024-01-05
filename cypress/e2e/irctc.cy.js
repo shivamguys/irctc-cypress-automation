@@ -6,7 +6,7 @@ import { PASSENGER_DETAILS, SOURCE_STATION, DESTINATION_STATION, TRAIN_NO, TRAIN
 
 describe('IRCTC TATKAL BOOKING', () => {
   it('Tatkal Booking Begins......', () => {
-    cy.viewport(1478, 1056)
+    cy.viewport(1478, 768)
     cy.visit('https://www.irctc.co.in/nget/train-search')
     cy.get('.h_head1 > .search_btn').click()
     cy.get(':nth-child(1) > .form-control').invoke('val', username).trigger('input')
@@ -38,7 +38,8 @@ describe('IRCTC TATKAL BOOKING', () => {
       // TATKAL or NORMAL BOOKING
       if (TATKAL) {
         cy.get('#journeyQuota > .ui-dropdown').click()
-        cy.get(':nth-child(6) > .ui-dropdown-item').click()
+        //cy.get(':nth-child(6) > .ui-dropdown-item').click() //For Tatkal
+        cy.get(':nth-child(7) > .ui-dropdown-item').click() //FOr Premium Tatkal
 
       }
 
@@ -149,6 +150,11 @@ describe('IRCTC TATKAL BOOKING', () => {
               });
             }
           })
+
+          //only book if confirm
+          cy.get('.col-sm-6:nth-child(2) > .css-label_c').click();
+          //cy.get('#confirmberths').click();
+
 
           // Choosing UPI As Payment Option while filling passenger details
           cy.get('#\\32  > .ui-radiobutton > .ui-radiobutton-box').click()
