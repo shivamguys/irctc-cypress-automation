@@ -2,6 +2,19 @@
 
 ### Now book your tatkal tickets under 1 min at ease by bypassing captcha and filling multiple passenger details at once. Let the script book it for you.
 
+### Disclaimer
+```
+This Cypress script for automating IRCTC ticket booking
+is created strictly for educational purposes. The code and its
+usage are intended to showcase Cypress testing capabilities and
+best practices. Any attempt to use this script for unauthorized
+access or activities that violate IRCTC terms of service or legal
+regulations is strictly prohibited. The author(s) and associated
+entities are not responsible for any misuse or legal consequences 
+resulting from the use of this script for any unauthorized 
+activities.
+```
+
 [![IRCTC Automation](https://img.shields.io/endpoint?url=https://cloud.cypress.io/badge/simple/7afdkj/main&style=for-the-badge&logo=cypress)](https://cloud.cypress.io/projects/7afdkj/runs)
 
 [![IRCTC Automation](https://img.shields.io/endpoint?url=https://cloud.cypress.io/badge/detailed/7afdkj/main&style=for-the-badge&logo=cypress)](https://cloud.cypress.io/projects/7afdkj/runs)
