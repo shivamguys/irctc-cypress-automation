@@ -1,8 +1,8 @@
-from PIL import Image
 from cloud_vision import writeBase64AsImage
 import sys
 import warnings
-warnings.filterwarnings('ignore')
+
+warnings.filterwarnings("ignore")
 
 if __name__ == "__main__":
     image_argv = sys.argv[1]
