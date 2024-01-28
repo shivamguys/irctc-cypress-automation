@@ -1,4 +1,4 @@
-import {formatDate, hasTatkalAlreadyOpened, tatkalOpenTimeForToday} from "../utils";
+import { formatDate, hasTatkalAlreadyOpened, tatkalOpenTimeForToday } from "../utils";
 
 const BASE_URL = Cypress.env('BASE_URL')
 const MANUAL_CAPTCHA = Cypress.env('MANUAL_CAPTCHA')
@@ -46,7 +46,7 @@ function performLogin(LOGGED_IN) {
             }
             else if ((el[0].innerText.includes('FORGOT ACCOUNT DETAILS')) && !(el[0].innerText.includes('Please Wait...'))) {
 
-                if(MANUAL_CAPTCHA) {
+                if (MANUAL_CAPTCHA) {
 
 
                     cy.get('#captcha').focus()
@@ -135,7 +135,7 @@ function solveCaptcha() {
         if (el[0].innerText.includes('Your ticket will be sent to') && !(el[0].innerText.includes('Please Wait...'))) {
 
 
-            if(MANUAL_CAPTCHA) {
+            if (MANUAL_CAPTCHA) {
                 cy.get('#captcha').focus()
                 cy.get('body').then((el) => {
                     if (el[0].innerText.includes('Payment Methods')) {
@@ -206,12 +206,14 @@ function BOOK_UNTIL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO, TATKAL
 
     cy.wait(1900)
 
-    if(TATKAL && !hasTatkalAlreadyOpened(TRAIN_COACH)) {
+    if (TATKAL && !hasTatkalAlreadyOpened(TRAIN_COACH)) {
 
         // wait for exact time
         cy.log("Waiting for the exact time of opening of TATKAL...")
         const exactTimeToOpen = tatkalOpenTimeForToday(TRAIN_COACH)
-        cy.get('div.h_head1', {timeout: 300000}).should('include.text', exactTimeToOpen)
+        alert(exactTimeToOpen)
+        cy.get('div.h_head1', { timeout: 300000 }).should('include.text', exactTimeToOpen)
+
 
     }
 

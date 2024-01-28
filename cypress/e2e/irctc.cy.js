@@ -89,7 +89,7 @@ describe('IRCTC TATKAL BOOKING', () => {
           cy.get('.dull-back.train-Header')
 
           // FOR BOARDING STATION CHANGE
-          if(BOARDING_STATION) {
+          if (BOARDING_STATION) {
 
             cy.get('.ui-dropdown.ui-widget.ui-corner-all').click()
             cy.contains('li.ui-dropdown-item', BOARDING_STATION)
@@ -118,7 +118,7 @@ describe('IRCTC TATKAL BOOKING', () => {
             cy.wrap(inputDiv).focused().clear()
             let PASSENGER = PASSENGER_DETAILS[index]
 
-            cy.wrap(inputDiv).invoke('val',PASSENGER['AGE']).trigger('input')
+            cy.wrap(inputDiv).invoke('val', PASSENGER['AGE']).trigger('input')
 
           })
 
@@ -174,7 +174,7 @@ describe('IRCTC TATKAL BOOKING', () => {
             // ...
             // https://securegw.paytm.in/theia/processTransaction?orderid=100004437462426
 
-            cy.wait("@payment",{timeout: 200000}).then((interception) => {
+            cy.wait("@payment", { timeout: 200000 }).then((interception) => {
               cy.log(interception)
               console.log(interception.response.body)
             })
