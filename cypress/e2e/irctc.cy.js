@@ -150,11 +150,43 @@ describe('IRCTC TATKAL BOOKING', () => {
             }
           })
 
+
+
+
+          // For Selecting "Book only if confirm berths are allotted.""
+          cy.get('body').then((el) => {
+
+            if (el[0].innerText.includes('Book only if confirm berths are allotted')) {
+              cy.get(':nth-child(2) > .css-label_c').click()
+
+            }
+          })
+
+
+
           // Choosing UPI As Payment Option while filling passenger details
           cy.get('#\\32  > .ui-radiobutton > .ui-radiobutton-box').click()
 
           // Proceed to NEXT STEP Final Confirmation 
           cy.get('.train_Search').click()
+
+
+          // ---- note this might appear this is uncertain -----------------
+
+          // For clicking confirmation dialog if opted for no food in vande bharat
+          // "Enhance Your Travel with Taste! Opt for Onboard Catering for a Delicious Dining Experience!"
+          cy.get('body').then((el) => {
+
+            if (el[0].innerText.includes('Confirmation')) {
+              // we are clicking close button as this would pop ou only if you are selecting no food
+              // irctc is suggesting that you opt it
+              // that's the reason we are clicking close button
+              cy.get('[icon="fa fa-close"] > .ui-button-text').click()
+
+            }
+          })
+          // ---- note this might appear this is uncertain -----------------
+
 
 
 
