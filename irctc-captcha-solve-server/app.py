@@ -12,7 +12,7 @@ def getCaptchaToText():
     base64_image = request.args.get("base64_image")
     proc = subprocess.Popen(
         [
-            "python",
+            "python3",
             os.getcwd() + "/captcha.py",
             json.dumps(base64_image[22:]),
         ],
