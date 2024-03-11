@@ -99,16 +99,32 @@ describe('IRCTC TATKAL BOOKING', () => {
 
           }
 
+          /*
+          OLD FILLING NAME CODE, CHECKING IF BELOW NEW ONE IS STABLE OR NOT............WOULD BE REMOVED LATER IF BELOW ONE WORKS
+          cy.get('.ui-autocomplete >').each((inputDiv, index) => {
+            
+              cy.wrap(inputDiv).click()
+              cy.wrap(inputDiv).focused().clear()
+              let PASSENGER = PASSENGER_DETAILS[index]
+              cy.wrap(inputDiv).invoke('val', PASSENGER['NAME']).trigger('input')
+            
+            
+            
+            })
+            */
+
+
           // FOR NAME
           cy.get('.ui-autocomplete >').each((inputDiv, index) => {
-
-            cy.wrap(inputDiv).click()
-            cy.wrap(inputDiv).focused().clear()
+            cy.wrap(inputDiv).click().as('clickedInput') // Save the clicked input element as an alias
+            cy.get('@clickedInput').focused().clear()     // Use the alias to continue the command chain
             let PASSENGER = PASSENGER_DETAILS[index]
-            cy.wrap(inputDiv).invoke('val', PASSENGER['NAME']).trigger('input')
-
-
-
+            if (PASSENGER && PASSENGER['NAME']) {
+              cy.get('@clickedInput').invoke('val', PASSENGER['NAME']).trigger('input')
+              alert(PASSENGER['NAME'])
+            } else {
+              cy.log('Passenger name not available or undefined.')
+            }
           })
 
           // FOR AGE
