@@ -116,6 +116,7 @@ describe('IRCTC TATKAL BOOKING', () => {
 
           // FOR NAME
           cy.get('.ui-autocomplete >').each((inputDiv, index) => {
+            cy.get(inputDiv)
             cy.wrap(inputDiv).click().as('clickedInput') // Save the clicked input element as an alias
             cy.get('@clickedInput').focused().clear()     // Use the alias to continue the command chain
             let PASSENGER = PASSENGER_DETAILS[index]
