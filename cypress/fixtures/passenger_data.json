@@ -1,24 +1,18 @@
 {
-  "TRAIN_NO": "12926",
-  "TRAIN_COACH": "3A",
-  "TRAVEL_DATE": "01/11/2023",
-  "SOURCE_STATION": "CDG",
+  "TRAIN_NO": "12274",
+  "TRAIN_COACH": "SL",
+  "TRAVEL_DATE": "19/03/2024",
+  "SOURCE_STATION": "NDLS",
   "BOARDING_STATION": null,
-  "DESTINATION_STATION": "MTJ",
-  "TATKAL": true,
+  "DESTINATION_STATION": "PNBE",
+  "TATKAL": false,
+  "UPI_ID": "",
   "PASSENGER_DETAILS": [
     {
-      "NAME": "SHIVAM PANDEY",
-      "AGE": 25,
+      "NAME": "Shivam Pandey",
+      "AGE": 26,
       "GENDER": "Male",
       "SEAT": "Side Lower",
-      "FOOD": "No Food"
-    },
-    {
-      "NAME": "RACHNA BHAGAT",
-      "AGE": 26,
-      "GENDER": "Female",
-      "SEAT": "Side Upper",
       "FOOD": "No Food"
     }
   ],

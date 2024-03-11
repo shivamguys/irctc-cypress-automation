@@ -2,7 +2,7 @@ import { formatDate } from "../utils";
 
 let username = Cypress.env('username')
 let password = Cypress.env('password')
-import { PASSENGER_DETAILS, SOURCE_STATION, DESTINATION_STATION, TRAIN_NO, TRAIN_COACH, TRAVEL_DATE, TATKAL, BOARDING_STATION } from '../fixtures/passenger_data.json'
+import { PASSENGER_DETAILS, SOURCE_STATION, DESTINATION_STATION, TRAIN_NO, TRAIN_COACH, TRAVEL_DATE, TATKAL, BOARDING_STATION, UPI_ID } from '../fixtures/passenger_data.json'
 
 describe('IRCTC TATKAL BOOKING', () => {
   it('Tatkal Booking Begins......', () => {
@@ -121,7 +121,6 @@ describe('IRCTC TATKAL BOOKING', () => {
             let PASSENGER = PASSENGER_DETAILS[index]
             if (PASSENGER && PASSENGER['NAME']) {
               cy.get('@clickedInput').invoke('val', PASSENGER['NAME']).trigger('input')
-              alert(PASSENGER['NAME'])
             } else {
               cy.log('Passenger name not available or undefined.')
             }
@@ -225,6 +224,16 @@ describe('IRCTC TATKAL BOOKING', () => {
             cy.wait("@payment", { timeout: 200000 }).then((interception) => {
               cy.log(interception)
               console.log(interception.response.body)
+
+              // MAKE SURE UPI ID EXIST THEN PROCEED PLEASE FILL UPI_ID VALUE IN cypress/fixtures/passenger_data.json as something like this "123713278162@paytm"
+              if (UPI_ID) {
+                cy.get('#ptm-upi').click()
+                cy.get('.brdr-box > :nth-child(2) > ._1WLd > :nth-child(1) > .xs-hover-box > ._Mzth > .form-ctrl').type("8604949532@paytm")
+                cy.get('.btn').click()
+
+              }
+
+
             })
 
 
