@@ -113,8 +113,8 @@ npm install
 npx cypress open
 
 ```
-
-
+### IMPORTANT
+### Create Your Google Cloud Account and Enable the billing for cloud vision that would charge you 2 or 3 ruppee and download your credentials file
 
 - Now navigate to **irctc-cypress-automation/irctc-captcha-solve-server** and install all requirements and run the server
 - **Make sure you run this from another terminal window tab** 
@@ -125,4 +125,10 @@ pip3 install -r requirements.txt
 export GOOGLE_APPLICATION_CREDENTIALS="your credentials file path goes here please change this............"
 python3 app.py
 ```
+#### Important For Windows:
+replace **export** with **set**
+Avoid using double quotes around the path. example
+set GOOGLE_APPLICATION_CREDENTIALS=C:\GOOGLE_APPLICATION_CREDENTIALS\credentials.json
+
+
 
