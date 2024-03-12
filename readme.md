@@ -128,7 +128,9 @@ python3 app.py
 #### Important For Windows:
 replace **export** with **set**
 Avoid using double quotes around the path. example
+```
 set GOOGLE_APPLICATION_CREDENTIALS=C:\GOOGLE_APPLICATION_CREDENTIALS\credentials.json
+ ```
 
 
 
