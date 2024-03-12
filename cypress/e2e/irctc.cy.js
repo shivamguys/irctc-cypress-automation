@@ -115,16 +115,23 @@ describe('IRCTC TATKAL BOOKING', () => {
 
 
           // FOR NAME
-          cy.get('.ui-autocomplete >').each((inputDiv, index) => {
-            cy.get(inputDiv)
-            cy.wrap(inputDiv).as('clickedInput') // Save the clicked input element as an alias
-            cy.get('@clickedInput').click({ force: true })
-            cy.get('@clickedInput').focused().clear()     // Use the alias to continue the command chain
-            let PASSENGER = PASSENGER_DETAILS[index]
-            if (PASSENGER && PASSENGER['NAME']) {
-              cy.get('@clickedInput').invoke('val', PASSENGER['NAME']).trigger('input')
+          cy.get('.ui-autocomplete input').each((inputField, index) => {
+            // Ensure PASSENGER_DETAILS is defined and has enough data
+            if (PASSENGER_DETAILS && index < PASSENGER_DETAILS.length) {
+              // Get passenger object at the specified index
+              let PASSENGER = PASSENGER_DETAILS[index];
+
+              // Check if the passenger object contains 'NAME' property
+              if (PASSENGER && PASSENGER['NAME']) {
+                // Clear the input field and set its value to the passenger's name
+                cy.wrap(inputField).clear().type(PASSENGER['NAME']);
+              } else {
+                // Log an error if 'NAME' property is missing in passenger object
+                console.error(`'NAME' property missing in passenger object at index ${index}`);
+              }
             } else {
-              cy.log('Passenger name not available or undefined.')
+              // Log an error if PASSENGER_DETAILS is missing or insufficient data
+              console.error(`PASSENGER_DETAILS is missing or insufficient data for index ${index}`);
             }
           })
 
