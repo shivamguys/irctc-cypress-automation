@@ -2,18 +2,18 @@
 
 ### Now book your tatkal tickets under 1 min at ease by bypassing captcha and filling multiple passenger details at once. Let the script book it for you.
 
-### Disclaimer
-```
-This Cypress script for automating IRCTC ticket booking
-is created strictly for educational purposes. The code and its
-usage are intended to showcase Cypress testing capabilities and
-best practices. Any attempt to use this script for unauthorized
-access or activities that violate IRCTC terms of service or legal
-regulations is strictly prohibited. The author(s) and associated
-entities are not responsible for any misuse or legal consequences 
-resulting from the use of this script for any unauthorized 
-activities.
-```
+> [!NOTE] 
+> ```
+> This Cypress script for automating IRCTC ticket booking
+> is created strictly for educational purposes. The code and its
+> usage are intended to showcase Cypress testing capabilities and
+> best practices. Any attempt to use this script for unauthorized
+> access or activities that violate IRCTC terms of service or legal
+> regulations is strictly prohibited. The author(s) and associated
+> entities are not responsible for any misuse or legal consequences 
+> resulting from the use of this script for any unauthorized 
+> activities.
+> ```
 
 [![IRCTC Automation](https://img.shields.io/endpoint?url=https://cloud.cypress.io/badge/simple/7afdkj/main&style=for-the-badge&logo=cypress)](https://cloud.cypress.io/projects/7afdkj/runs)
 
@@ -36,7 +36,7 @@ activities.
 - [x] Signing in with your username and password
 - [x] Multiple Passenger 
 - [x] Pre filling All Information
-- [x] Payment Gateway Automation(Paying With UPI QR)
+- [x] Payment Gateway Automation(Paying With UPI ID OR QR)
 
 
 
@@ -44,6 +44,13 @@ activities.
 
 - Things you need **GOOGLE_APPLICATION_CREDENTIALS** thats it.
 - Make relevant changes in file located at **cypress/fixtures/passenger_data.json**
+> [!TIP]
+> Filling Your **UPI ID** Will Initiate A Payment Request Directly.
+> But it's a bit slow generally would take 2 or 3 sec to arrive request on your smartphone.
+> If Your are not using this then you can scan and pay directly which would be much faster.
+
+
+
 ```
 {
   "TRAIN_NO": "12318",
@@ -53,6 +60,7 @@ activities.
   "BOARDING_STATION": null, <-- Change to full station name if required, else leave null
   "DESTINATION_STATION": "BSB",
   "TATKAL": true,
+  "UPI_ID": "",
   "PASSENGER_DETAILS": [
     {
       "NAME": "SHIVAM PANDEY",
@@ -81,7 +89,8 @@ activities.
 
 - Configure `username` , `password` in `cypress.env.json`
 
-- If you wish to enter CAPTCHA manually, then change `MANUAL_CAPTCHA` to `true`
+> [!TIP]
+> If you wish to enter **CAPTCHA** manually, then change `MANUAL_CAPTCHA` to `true`
 
 ```
 {
@@ -113,8 +122,9 @@ npm install
 npx cypress open
 
 ```
-### IMPORTANT
-### Create Your Google Cloud Account and Enable the billing for cloud vision that would charge you 2 or 3 ruppee and download your credentials file
+> [!IMPORTANT]
+>  Create Your Google Cloud Account and Enable the billing for cloud vision that would charge you 2₹ or 3₹ ruppee and 
+> download your credentials file.
 
 - Now navigate to **irctc-cypress-automation/irctc-captcha-solve-server** and install all requirements and run the server
 - **Make sure you run this from another terminal window tab** 
@@ -125,8 +135,8 @@ pip3 install -r requirements.txt
 export GOOGLE_APPLICATION_CREDENTIALS="your credentials file path goes here please change this............"
 python3 app.py
 ```
-#### Important For Windows:
-replace **export** with **set**
+> [!IMPORTANT]
+> For Windows replace **export** with **set**
 Avoid using double quotes around the path. example
 ```
 set GOOGLE_APPLICATION_CREDENTIALS=C:\GOOGLE_APPLICATION_CREDENTIALS\credentials.json
