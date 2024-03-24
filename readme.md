@@ -1,6 +1,7 @@
-# IRCTC Tatkal Cypress Automation !
+![Please Favourite This Project Before Reading](https://github.com/shivamguys/irctc-cypress-automation/assets/25263989/00ea8f09-b0f0-4130-a86d-1aaa6eecb80e)
+# IRCTC Tatkal Cypress Automation!
 
-### Now book your tatkal tickets under 1 min at ease by bypassing captcha and filling multiple passenger details at once. Let the script book it for you.
+### Now book your Tatkal tickets in under 1 minute at ease by bypassing the captcha and filling in multiple passenger details at once. Let the script book it for you.
 
 > [!NOTE] 
 > ```
@@ -19,7 +20,7 @@
 
 [![IRCTC Automation](https://img.shields.io/endpoint?url=https://cloud.cypress.io/badge/detailed/7afdkj/main&style=for-the-badge&logo=cypress)](https://cloud.cypress.io/projects/7afdkj/runs)
 
-### See the recording of all the runs at tatkal time here....
+### See the recording of all the runs at Tatkal time here....
 ####  [Sneak Peek into the runs here...](https://cloud.cypress.io/projects/7afdkj/runs)
 
 ### Watch the simple recording here....
@@ -43,11 +44,11 @@
 ## How to Make this work for you?
 
 - Things you need **GOOGLE_APPLICATION_CREDENTIALS** thats it.
-- Make relevant changes in file located at **cypress/fixtures/passenger_data.json**
+- Make relevant changes in the file located at **cypress/fixtures/passenger_data.json**
 > [!TIP]
 > Filling Your **UPI ID** Will Initiate A Payment Request Directly.
 > But it's a bit slow generally would take 2 or 3 sec to arrive request on your smartphone.
-> If Your are not using this then you can scan and pay directly which would be much faster.
+> If You are not using this then you can scan and pay directly which would be much faster.
 
 
 
@@ -123,7 +124,7 @@ npx cypress open
 
 ```
 > [!IMPORTANT]
->  Create Your Google Cloud Account and Enable the billing for cloud vision that would charge you 2₹ or 3₹ ruppee and 
+>  Create Your Google Cloud Account and Enable the billing for cloud vision that would charge you 2₹ or 3₹ and 
 > download your credentials file.
 
 - Now navigate to **irctc-cypress-automation/irctc-captcha-solve-server** and install all requirements and run the server
