@@ -125,6 +125,8 @@ npx cypress open
 > [!IMPORTANT]
 >  Create Your Google Cloud Account and Enable the billing for cloud vision that would charge you 2₹ or 3₹ ruppee and 
 > download your credentials file.
+>
+> https://console.cloud.google.com/marketplace/product/google/vision.googleapis.com
 
 - Now navigate to **irctc-cypress-automation/irctc-captcha-solve-server** and install all requirements and run the server
 - **Make sure you run this from another terminal window tab** 
