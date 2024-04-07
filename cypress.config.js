@@ -4,7 +4,7 @@ module.exports = defineConfig({
   projectId: '7afdkj',
 
   defaultCommandTimeout: 120000,
-  video: true,
+  // video: true,
 
   e2e: {
     setupNodeEvents(on, config) {
