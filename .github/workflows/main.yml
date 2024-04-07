@@ -33,6 +33,6 @@ jobs:
       # continue-on-error: true
       with:
         browser: chrome
-        command: npx cypress run --env USERNAME=${{secrets.USERNAME}},PASSWORD=${{secrets.PASSWORD}}
+        command: npx cypress run --browser chrome --env USERNAME=${{secrets.USERNAME}},PASSWORD=${{secrets.PASSWORD}}
 
 
