@@ -1,0 +1,38 @@
+name: IRCTC Booking
+
+on:
+  # schedule:
+  # # “At minute 0 and 30 past every hour from 12 through 21.”
+  # - cron: '0,30 12-21 * * *'
+  push:
+    branches:
+      - 'feature/*'
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  IRCTC-Booking:
+    runs-on: ubuntu-latest
+    
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r irctc-captcha-solver/requirements.txt
+
+      - name: Install Node.js and npm
+        uses: actions/setup-node@v4
+        with:
+          node-version: '21.7.1'
+
+      #- name: Installing Cypress
+      #  run: npm install cypress

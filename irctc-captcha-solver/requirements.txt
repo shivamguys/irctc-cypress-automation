@@ -1,0 +1,4 @@
+argparse
+pillow
+easyocr==1.7.1
+numpy
