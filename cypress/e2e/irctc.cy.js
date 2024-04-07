@@ -1,7 +1,6 @@
-import { formatDate } from "../utils";
 
-let username = Cypress.env('username')
-let password = Cypress.env('password')
+let username = Cypress.env('USERNAME')
+let password = Cypress.env('PASSWORD')
 import { PASSENGER_DETAILS, SOURCE_STATION, DESTINATION_STATION, TRAIN_NO, TRAIN_COACH, TRAVEL_DATE, TATKAL, BOARDING_STATION, UPI_ID } from '../fixtures/passenger_data.json'
 
 describe('IRCTC TATKAL BOOKING', () => {
@@ -18,17 +17,17 @@ describe('IRCTC TATKAL BOOKING', () => {
 
 
       // from station
-      cy.get('.ui-autocomplete > .ng-tns-c57-8').type(SOURCE_STATION)
-      cy.wait(600)
-      cy.get('#p-highlighted-option').click()
+      cy.get('.ui-autocomplete > .ng-tns-c57-8').should('be.visible').type(SOURCE_STATION)
+      // cy.wait(600)
+      cy.get('#p-highlighted-option').should('be.visible').click()
 
       // to station
-      cy.get('.ui-autocomplete > .ng-tns-c57-9').type(DESTINATION_STATION)
-      cy.wait(600)
-      cy.get('#p-highlighted-option').click()
+      cy.get('.ui-autocomplete > .ng-tns-c57-9').should('be.visible').type(DESTINATION_STATION)
+      // cy.wait(600)
+      cy.get('#p-highlighted-option').should('be.visible').click()
 
       // date
-      cy.get('.ui-calendar').click()
+      cy.get('.ui-calendar').should('be.visible').click()
       // clearing the default date which is prefilled in the box
       cy.focused().clear()
       // filling the date

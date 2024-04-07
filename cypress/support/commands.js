@@ -1,6 +1,5 @@
 import { formatDate, hasTatkalAlreadyOpened, tatkalOpenTimeForToday } from "../utils";
 
-const BASE_URL = Cypress.env('BASE_URL')
 const MANUAL_CAPTCHA = Cypress.env('MANUAL_CAPTCHA')
 
 
@@ -39,7 +38,7 @@ function performLogin(LOGGED_IN) {
     if (!LOGGED_IN) {
         cy.wait(1300)
 
-        cy.get('body').then((el) => {
+        cy.get('body').should('be.visible').then((el) => {
 
             if (el[0].innerText.includes('Logout')) {
                 console.log("We have logged in successfully at this stage")
@@ -62,12 +61,11 @@ function performLogin(LOGGED_IN) {
                     // get captcha value base64 starts---------
                     cy.get('.captcha-img').invoke('attr', 'src').then((value) => {
                         // api call to retrieve captcha value
-                        cy.request({
-                            url: `${BASE_URL}getCaptchaToText?base64_image=${value}`,
+                        console.log(`python3 irctc-captcha-solver/app.py "${value}"`)
+                        cy.exec(`python3 irctc-captcha-solver/app.py "${value}"`).then((result) => {
 
-                        }).then((response) => {
-
-                            cy.get('#captcha').type(response.body)
+                            cy.get('#captcha').type(result.stdout).type('{enter}');
+                            // cy.contains('SIGN IN').click()
                             cy.get('body').then((el) => {
                                 if (el[0].innerText.includes('Invalid Captcha')) {
 
@@ -125,7 +123,7 @@ function solveCaptcha() {
 
 
     cy.wait(1200)
-    cy.get('body').then((el) => {
+    cy.get('body').should('be.visible').then((el) => {
 
         if (el[0].innerText.includes('No seats available')) {
             cy.fail('Further execution stopped because there are no more tickets.');
@@ -147,12 +145,9 @@ function solveCaptcha() {
                 // get captcha value base64 starts---------
                 cy.get('.captcha-img').invoke('attr', 'src').then((value) => {
                     // api call to retrieve captcha value
-                    cy.request({
-                        url: `${BASE_URL}getCaptchaToText?base64_image=${value}`,
+                    cy.exec(`python3 irctc-captcha-solver/app.py "${value}"`).then((result) => {
 
-                    }).then((response) => {
-
-                        cy.get('#captcha').type(response.body)
+                        cy.get('#captcha').type(result.stdout).type('{enter}')
                         cy.get('body').then((el) => {
                             if (el[0].innerText.includes('Your ticket will be sent to')) {
 
@@ -216,7 +211,7 @@ function BOOK_UNTIL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO, TATKAL
 
     }
 
-    cy.get('body').then((el) => {
+    cy.get('body').should('be.visible').then((el) => {
 
         if (el[0].innerText.includes('Booking not yet started for the selected quota and class') && !(el[0].innerText.includes('Please Wait...'))) {
 
@@ -226,12 +221,12 @@ function BOOK_UNTIL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO, TATKAL
             // we again check the body are we at any loading phase as in loading phase content becomes visible but div
             // not active to click it
             // body fetch block starts............
-            cy.get('body').then((el) => {
+            cy.get('body').should('be.visible').then((el) => {
 
                 if (el[0].innerText.includes('Booking not yet started for the selected quota and class') && !(el[0].innerText.includes('Please Wait...'))) {
 
                     // iterating each block div of available trains starts here.....
-                    cy.get(':nth-child(n) > .bull-back').each((div, index) => {
+                    cy.get(':nth-child(n) > .bull-back').should('be.visible').each((div, index) => {
 
                         // confirming we click on same train no and seat class div
                         if (div[0].innerText.includes(TRAIN_NO) && div[0].innerText.includes(TRAIN_COACH)) {

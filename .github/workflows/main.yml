@@ -28,5 +28,10 @@ jobs:
       with:
         node-version: '21.7.1'
 
-      #- name: Installing Cypress
-      #  run: npm install cypress
+    - name: Running IRCTC Cypress Script
+      uses: cypress-io/github-action@v6
+      # continue-on-error: true
+      with:
+        command: npx cypress run --env USERNAME=${{secrets.USERNAME}},PASSWORD=${{secrets.PASSWORD}}
+
+

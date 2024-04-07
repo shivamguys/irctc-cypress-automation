@@ -6,7 +6,7 @@ import base64
 import easyocr
 
 
-reader = easyocr.Reader(["en"], gpu=False)
+reader = easyocr.Reader(["en"])
 
 
 def extract_text_from_image(base64_image):
