@@ -32,6 +32,7 @@ jobs:
       uses: cypress-io/github-action@v6
       # continue-on-error: true
       with:
+        browser: chrome
         command: npx cypress run --env USERNAME=${{secrets.USERNAME}},PASSWORD=${{secrets.PASSWORD}}
 
 
