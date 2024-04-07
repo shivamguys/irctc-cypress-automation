@@ -35,5 +35,6 @@ if __name__ == "__main__":
     )
     parser.add_argument("image", type=str, help="Base64 encoded image")
     args = parser.parse_args()
+
     extracted_text = extract_text_from_image(args.image)
     print(extracted_text)
