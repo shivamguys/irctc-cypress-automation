@@ -15,12 +15,12 @@
 > activities.
 > ```
 
+[![IRCTC Automation](https://github.com/shivamguys/irctc-cypress-automation/actions/workflows/main.yml/badge.svg)](https://github.com/shivamguys/irctc-cypress-automation/actions/workflows/main.yml)
+
 [![IRCTC Automation](https://img.shields.io/endpoint?url=https://cloud.cypress.io/badge/simple/7afdkj/main&style=for-the-badge&logo=cypress)](https://cloud.cypress.io/projects/7afdkj/runs)
 
 [![IRCTC Automation](https://img.shields.io/endpoint?url=https://cloud.cypress.io/badge/detailed/7afdkj/main&style=for-the-badge&logo=cypress)](https://cloud.cypress.io/projects/7afdkj/runs)
 
-### See the recording of all the runs at tatkal time here....
-####  [Sneak Peek into the runs here...](https://cloud.cypress.io/projects/7afdkj/runs)
 
 ### Watch the simple recording here....
 ####  [Watch the video here](https://i.imgur.com/3U8yKmb.mp4)
@@ -32,17 +32,21 @@
 
 ## Features it has right now?
 
-- [x] Filling Captchas and retrying untill success
-- [x] Signing in with your username and password
-- [x] Multiple Passenger 
-- [x] Pre filling All Information
-- [x] Payment Gateway Automation(Paying With UPI ID OR QR)
+-  ✓ Can book **Tatkal** and **Normal Tickets** as well.
+-  ✓ Can book tickets for you if you open even **2-3 minutes** before tatkal time.
+-  ✓ Signing in with your **username** and **password**.
+-  ✓ Filling Captchas and retrying untill success.
+-  ✓ Support for **Food Choices**, **Seats Preferences**.
+-  ✓ Will Book only if confirm berths are alloted.
+-  ✓ **Multiple passengers** supported. 
+-  ✓ Pre filling all your information.
+-  ✓ **Payment Gateway Automation** (Paying With **UPI ID** OR **QR Code**).
 
 
 
 ## How to Make this work for you?
 
-- Things you need **GOOGLE_APPLICATION_CREDENTIALS** thats it.
+- Things you need in your system **NodeJS**, **Python**.
 - Make relevant changes in file located at **cypress/fixtures/passenger_data.json**
 > [!TIP]
 > Filling Your **UPI ID** Will Initiate A Payment Request Directly.
@@ -54,7 +58,7 @@
 ```
 {
   "TRAIN_NO": "12318",
-  "TRAIN_COACH": "SL",
+  "TRAIN_COACH": "3A",
   "TRAVEL_DATE": "12/09/2023",
   "SOURCE_STATION": "UMB",
   "BOARDING_STATION": null, <-- Change to full station name if required, else leave null
@@ -78,71 +82,113 @@
 
 ***
 ```
-"__valid_coaches__": "SL | 2A | 3A | 3E | 1A | CC | EC | 2S",
-"__valid_seats__": "Lower | Middle | Upper | Side Lower | Side Upper | Window Side | No Preference",
-"__valid_genders__": "Male | Female | Transgender",
-"__valid_food_choices__": "Veg | Non Veg | No Food"
+"__valid_coaches__": "SL | 2A | 3A | 3E | 1A | CC | EC | 2S", <---------- Please Use Only from these values.
+"__valid_seats__": "Lower | Middle | Upper | Side Lower | Side Upper | Window Side | No Preference",   <---------- Please Use Only from these values.
+"__valid_genders__": "Male | Female | Transgender", <---------- Please Use Only from these values.
+"__valid_food_choices__": "Veg | Non Veg | No Food" <---------- Please Use Only from these values.
 
 ```
 ***
-- You can add multiple passenger object in `PASSENGER_DETAILS`
 
-- Configure `username` , `password` in `cypress.env.json`
+
+- You can add multiple passenger array of objects in `PASSENGER_DETAILS` as an example below
+```
+{
+  "TRAIN_NO": "12318",
+  "TRAIN_COACH": "3A",
+  "TRAVEL_DATE": "12/09/2023",
+  "SOURCE_STATION": "UMB",
+  "BOARDING_STATION": null, <-- Change to full station name if required, else leave null
+  "DESTINATION_STATION": "BSB",
+  "TATKAL": true,
+  "UPI_ID": "",
+  "PASSENGER_DETAILS": [
+    {
+      "NAME": "SHIVAM PANDEY",
+      "AGE": 26,
+      "GENDER": "Male",
+      "SEAT": "Side Upper",
+      "FOOD" "No Food"
+    },
+    {
+      "NAME": "Rachna Bhagat",
+      "AGE": 26,
+      "GENDER": "Female",
+      "SEAT": "Side Lower",
+      "FOOD" "No Food"
+    },
+    {
+      "NAME": "Passenger 3 Name",
+      "AGE": 26,
+      "GENDER": "Female",
+      "SEAT": "Side Lower",
+      "FOOD" "No Food"
+    }
+  ],
+
+}
+```
+
+
+
+- You can configure your IRCTC `username` , `password` in `cypress.env.json`
 
 > [!TIP]
-> If you wish to enter **CAPTCHA** manually, then change `MANUAL_CAPTCHA` to `true`
+> If you wish to enter **CAPTCHA** manually, then change `MANUAL_CAPTCHA` to `true` in `cypress.env.json`
 
 ```
 {
     "username": "yourusername",
     "password": "yourpassword",
-    "BASE_URL": "http://127.0.0.1:5000/",
     "MANUAL_CAPTCHA": false
 }
 ```
 
--  **BASE_URL** is the local python server which you will run is responsible for filling captchas for you.
+
+# Running This On Your System... ?
+## Running this whole bunch.. ?
 
 
-## Running this whole bunch ?
+## Installation Guide
+- Clone the code ```git clone https://github.com/shivamguys/irctc-cypress-automation.git``` or download the code zip files.
+- Make sure you have **Nodejs** and **npm** installed in your system you can visit **NodeJs** official website you will have full instruction guide present over there to install in your system.
 
-
-- clone the repo
-- make sure you have Nodejs and npm installed
-```
-sudo apt update 
-sudo apt install nodejs
-sudo apt install npm
-```
-- navigate to **irctc-cypress-automation** and install dependencies
+### Sample Nodejs and npm installation in Linux
 
 ```
-cd irctc-cypress-automation
-npm install
-npx cypress open
+# installs NVM (Node Version Manager)
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+# download and install Node.js
+nvm install 21
+# verifies the right Node.js version is in the environment
+node -v # should print `v21.7.1`
+# verifies the right NPM version is in the environment
+npm -v # should print `10.5.0`
 
 ```
-> [!IMPORTANT]
->  Create Your Google Cloud Account and Enable the billing for cloud vision that would charge you 2₹ or 3₹ ruppee and 
-> download your credentials file.
->
-> https://console.cloud.google.com/marketplace/product/google/vision.googleapis.com
 
-- Now navigate to **irctc-cypress-automation/irctc-captcha-solve-server** and install all requirements and run the server
-- **Make sure you run this from another terminal window tab** 
-- Set the path for your **GOOGLE_APPLICATION_CREDENTIALS** also
-```
-cd irctc-cypress-automation/irctc-captcha-solve-server
-pip3 install -r requirements.txt
-export GOOGLE_APPLICATION_CREDENTIALS="your credentials file path goes here please change this............"
-python3 app.py
-```
-> [!IMPORTANT]
-> For Windows replace **export** with **set**
-Avoid using double quotes around the path. example
-```
-set GOOGLE_APPLICATION_CREDENTIALS=C:\GOOGLE_APPLICATION_CREDENTIALS\credentials.json
- ```
+### After NodeJs and Npm Installation, its time for you to install python and pip3 on your system.
+### After Python Installation Follow Below Steps.......
+##### In Case You Want To Install Pip3 here's the command to install in Linux
+```sudo apt-get install python3-pip -y```
 
 
+#### After Pip3 Installation you can install all requirements by pasting below command.
+```
+pip3 install -r irctc-captcha-solver/requirements.txt # <---- Make Sure You Run This Command From Code Folder. 
+```
+
+#### Check If Everything Works Fine.... 
+This Would Print **No --image-base-64 provided** Which Means You Have Followed Correctly at this point.
+```
+python irctc-captcha-solver/app.py --image-base-64 ""
+```
+
+
+### Last Step That's It...........
+
+```
+npm install # <---- Make Sure You Run This Command From Code Folder. 
+npx cypress run --headed --no-exit # <---- Make Sure You Run This Command From Code Folder. 
+```
 

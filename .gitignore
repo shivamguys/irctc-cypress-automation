@@ -3,3 +3,4 @@ cypress.env.json
 .idea
 cypress/videos/
 cypress/screenshots/
+irctc-captcha-solver/__pycache__

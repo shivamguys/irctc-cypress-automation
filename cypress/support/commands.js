@@ -2,8 +2,7 @@ import { formatDate, hasTatkalAlreadyOpened, tatkalOpenTimeForToday } from "../u
 
 const MANUAL_CAPTCHA = Cypress.env('MANUAL_CAPTCHA')
 
-var MAX_ATTEMPT = 6
-var MAX_ATTEMPT_1 = 6
+
 Cypress.on('uncaught:exception', (err, runnable) => {
     // returning false here prevents Cypress from
     // failing the test
@@ -22,7 +21,6 @@ Cypress.Commands.add('submitCaptcha', () => {
 
 
 Cypress.Commands.add('solveCaptcha', () => {
-
     solveCaptcha()
 
 })
@@ -35,10 +33,6 @@ Cypress.Commands.add('bookUntilTatkalGetsOpen', (div, TRAIN_COACH, TRAVEL_DATE, 
 })
 
 function performLogin(LOGGED_IN) {
-    // exit in case MAX_ATTEMPT of captcha reached
-    if (MAX_ATTEMPT <= 0) {
-        return
-    }
 
     // if starts
     if (!LOGGED_IN) {
@@ -67,10 +61,8 @@ function performLogin(LOGGED_IN) {
                     // get captcha value base64 starts---------
                     cy.get('.captcha-img').invoke('attr', 'src').then((value) => {
                         // api call to retrieve captcha value
-                        cy.task("log", `python3 irctc-captcha-solver/app.py "${value}"`)
-                        cy.exec(`python3 irctc-captcha-solver/app.py "${value}"`).then((result) => {
-                            MAX_ATTEMPT -= 1
-                            cy.task("log", `MAX ATTEMPT -> ${MAX_ATTEMPT} result.stdout ${result.stdout}`)
+                        cy.task("log", `python3 irctc-captcha-solver/app.py --image-base-64 "${value}"`)
+                        cy.exec(`python3 irctc-captcha-solver/app.py --image-base-64 "${value}"`).then((result) => {
                             cy.get('#captcha').type(result.stdout).type('{enter}');
                             // cy.contains('SIGN IN').click()
                             cy.get('body').then((el) => {
@@ -127,10 +119,6 @@ function performLogin(LOGGED_IN) {
 
 
 function solveCaptcha() {
-    // exit in case MAX_ATTEMPT_1 of captcha reached
-    if (MAX_ATTEMPT_1 <= 0) {
-        return
-    }
 
     cy.wait(1200)
     cy.get('body').should('be.visible').then((el) => {
@@ -155,9 +143,7 @@ function solveCaptcha() {
                 // get captcha value base64 starts---------
                 cy.get('.captcha-img').invoke('attr', 'src').then((value) => {
                     // api call to retrieve captcha value
-                    cy.exec(`python3 irctc-captcha-solver/app.py "${value}"`).then((result) => {
-                        MAX_ATTEMPT_1 -= 1
-                        cy.task("log", `MAX ATTEMPT_1 -> ${MAX_ATTEMPT_1}`)
+                    cy.exec(`python3 irctc-captcha-solver/app.py --image-base-64 "${value}"`).then((result) => {
 
                         cy.get('#captcha').type(result.stdout).type('{enter}')
                         cy.get('body').then((el) => {
