@@ -18,11 +18,13 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - uses: actions/setup-python@v5
+      continue-on-error: true
       with:
         python-version: '3.11'
         cache: 'pip' # caching pip dependencies
     - run: |
         pip install -r irctc-captcha-solver/requirements.txt
+        python3 irctc-captcha-solver/app.py
 
 
     - name: Install Node.js and npm
