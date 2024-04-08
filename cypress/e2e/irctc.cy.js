@@ -1,13 +1,14 @@
 
 let username = Cypress.env('USERNAME')
 let password = Cypress.env('PASSWORD')
-import { PASSENGER_DETAILS, SOURCE_STATION, DESTINATION_STATION, TRAIN_NO, TRAIN_COACH, TRAVEL_DATE, TATKAL, BOARDING_STATION, UPI_ID } from '../fixtures/passenger_data.json'
+import { PASSENGER_DETAILS, SOURCE_STATION, DESTINATION_STATION, TRAIN_NO, TRAIN_COACH, TRAVEL_DATE, TATKAL, BOARDING_STATION, UPI_ID_CONFIG } from '../fixtures/passenger_data.json'
 
 describe('IRCTC TATKAL BOOKING', () => {
   it('Tatkal Booking Begins......', () => {
     cy.viewport(1478, 1056)
     cy.visit('https://www.irctc.co.in/nget/train-search')
-    cy.task("log", 'Fetching Completed')
+    cy.task("log", 'Website Fetching completed.........')
+    const UPI_ID = Cypress.env().UPI_ID ? Cypress.env().UPI_ID : UPI_ID_CONFIG;
     cy.get('.h_head1 > .search_btn').click()
     cy.get(':nth-child(1) > .form-control').invoke('val', username).trigger('input')
     cy.get(':nth-child(2) > .form-control').invoke('val', password).trigger('input')
