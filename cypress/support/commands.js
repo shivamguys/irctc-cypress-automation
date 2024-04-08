@@ -2,8 +2,8 @@ import { formatDate, hasTatkalAlreadyOpened, tatkalOpenTimeForToday } from "../u
 
 const MANUAL_CAPTCHA = Cypress.env('MANUAL_CAPTCHA')
 
-MAX_ATTEMPT = 6
-MAX_ATTEMPT_1 = 6
+var MAX_ATTEMPT = 6
+var MAX_ATTEMPT_1 = 6
 Cypress.on('uncaught:exception', (err, runnable) => {
     // returning false here prevents Cypress from
     // failing the test
