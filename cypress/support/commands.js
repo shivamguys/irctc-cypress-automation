@@ -2,7 +2,8 @@ import { formatDate, hasTatkalAlreadyOpened, tatkalOpenTimeForToday } from "../u
 
 const MANUAL_CAPTCHA = Cypress.env('MANUAL_CAPTCHA')
 
-
+MAX_ATTEMPT = 6
+MAX_ATTEMPT_1 = 6
 Cypress.on('uncaught:exception', (err, runnable) => {
     // returning false here prevents Cypress from
     // failing the test
@@ -34,6 +35,11 @@ Cypress.Commands.add('bookUntilTatkalGetsOpen', (div, TRAIN_COACH, TRAVEL_DATE, 
 })
 
 function performLogin(LOGGED_IN) {
+    // exit in case MAX_ATTEMPT of captcha reached
+    if (MAX_ATTEMPT <= 0) {
+        return
+    }
+
     // if starts
     if (!LOGGED_IN) {
         cy.wait(1300)
@@ -63,7 +69,7 @@ function performLogin(LOGGED_IN) {
                         // api call to retrieve captcha value
                         console.log(`python3 irctc-captcha-solver/app.py "${value}"`)
                         cy.exec(`python3 irctc-captcha-solver/app.py "${value}"`).then((result) => {
-
+                            MAX_ATTEMPT -= 1
                             cy.get('#captcha').type(result.stdout).type('{enter}');
                             // cy.contains('SIGN IN').click()
                             cy.get('body').then((el) => {
@@ -120,7 +126,10 @@ function performLogin(LOGGED_IN) {
 
 
 function solveCaptcha() {
-
+    // exit in case MAX_ATTEMPT_1 of captcha reached
+    if (MAX_ATTEMPT_1 <= 0) {
+        return
+    }
 
     cy.wait(1200)
     cy.get('body').should('be.visible').then((el) => {
@@ -146,7 +155,7 @@ function solveCaptcha() {
                 cy.get('.captcha-img').invoke('attr', 'src').then((value) => {
                     // api call to retrieve captcha value
                     cy.exec(`python3 irctc-captcha-solver/app.py "${value}"`).then((result) => {
-
+                        MAX_ATTEMPT_1 -= 1
                         cy.get('#captcha').type(result.stdout).type('{enter}')
                         cy.get('body').then((el) => {
                             if (el[0].innerText.includes('Your ticket will be sent to')) {
