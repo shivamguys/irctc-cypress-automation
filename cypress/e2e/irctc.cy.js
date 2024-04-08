@@ -231,8 +231,8 @@ describe('IRCTC TATKAL BOOKING', () => {
             // https://securegw.paytm.in/theia/processTransaction?orderid=100004437462426
 
             cy.wait("@payment", { timeout: 200000 }).then((interception) => {
-              cy.task("log", interception)
-              cy.task("log", interception.response.body)
+              console.log(interception)
+              console.log(interception.response.body)
 
               // MAKE SURE UPI ID EXIST THEN PROCEED PLEASE FILL UPI_ID VALUE IN cypress/fixtures/passenger_data.json as something like this "123713278162@paytm"
               if (UPI_ID) {
