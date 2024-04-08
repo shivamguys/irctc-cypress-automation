@@ -47,7 +47,7 @@ function performLogin(LOGGED_IN) {
         cy.get('body').should('be.visible').then((el) => {
 
             if (el[0].innerText.includes('Logout')) {
-                console.log("We have logged in successfully at this stage")
+                cy.task("log", "We have logged in successfully at this stage")
             }
             else if ((el[0].innerText.includes('FORGOT ACCOUNT DETAILS')) && !(el[0].innerText.includes('Please Wait...'))) {
 
@@ -67,9 +67,10 @@ function performLogin(LOGGED_IN) {
                     // get captcha value base64 starts---------
                     cy.get('.captcha-img').invoke('attr', 'src').then((value) => {
                         // api call to retrieve captcha value
-                        console.log(`python3 irctc-captcha-solver/app.py "${value}"`)
+                        cy.task("log", `python3 irctc-captcha-solver/app.py "${value}"`)
                         cy.exec(`python3 irctc-captcha-solver/app.py "${value}"`).then((result) => {
                             MAX_ATTEMPT -= 1
+                            cy.task("log", `MAX ATTEMPT -> ${MAX_ATTEMPT} result.stdout ${result.stdout}`)
                             cy.get('#captcha').type(result.stdout).type('{enter}');
                             // cy.contains('SIGN IN').click()
                             cy.get('body').then((el) => {
@@ -146,7 +147,7 @@ function solveCaptcha() {
                 cy.get('#captcha').focus()
                 cy.get('body').then((el) => {
                     if (el[0].innerText.includes('Payment Methods')) {
-                        console.log("Bypassed Captcha")
+                        cy.task("log", "Bypassed Captcha")
                     }
                 })
             } else {
@@ -156,6 +157,8 @@ function solveCaptcha() {
                     // api call to retrieve captcha value
                     cy.exec(`python3 irctc-captcha-solver/app.py "${value}"`).then((result) => {
                         MAX_ATTEMPT_1 -= 1
+                        cy.task("log", `MAX ATTEMPT_1 -> ${MAX_ATTEMPT_1}`)
+
                         cy.get('#captcha').type(result.stdout).type('{enter}')
                         cy.get('body').then((el) => {
                             if (el[0].innerText.includes('Your ticket will be sent to')) {
@@ -164,7 +167,7 @@ function solveCaptcha() {
 
                             }
                             else if (el[0].innerText.includes('Payment Methods')) {
-                                console.log("Bypassed Captcha")
+                                cy.task("log", "Bypassed Captcha")
                             }
                             else {
                                 solveCaptcha()
@@ -188,7 +191,7 @@ function solveCaptcha() {
         }
         else if (el[0].innerText.includes('Payment Methods')) {
 
-            console.log("CAPTCHA .... SOLVED")
+            cy.task("log", "CAPTCHA .... SOLVED")
         }
         else {
             solveCaptcha()
@@ -213,7 +216,7 @@ function BOOK_UNTIL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO, TATKAL
     if (TATKAL && !hasTatkalAlreadyOpened(TRAIN_COACH)) {
 
         // wait for exact time
-        cy.log("Waiting for the exact time of opening of TATKAL...")
+        cy.task("log", "Waiting for the exact time of opening of TATKAL...")
         const exactTimeToOpen = tatkalOpenTimeForToday(TRAIN_COACH)
         cy.get('div.h_head1', { timeout: 300000 }).should('include.text', exactTimeToOpen)
 
@@ -262,7 +265,7 @@ function BOOK_UNTIL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO, TATKAL
 
         }
         else if (el[0].innerText.includes('Passenger Details') && el[0].innerText.includes('Contact Details') && !(el[0].innerText.includes('Please Wait...'))) {
-            console.log("TATKAL BOOKING NOW OPEN....STARTING FURTHER PROCESS")
+            cy.task("log", "TATKAL BOOKING NOW OPEN....STARTING FURTHER PROCESS")
 
         }
         else if (!(el[0].innerText.includes('Passenger Details')) && !(el[0].innerText.includes('Contact Details')) && !(el[0].innerText.includes('Please Wait...'))) {

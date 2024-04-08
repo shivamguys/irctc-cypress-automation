@@ -7,6 +7,7 @@ describe('IRCTC TATKAL BOOKING', () => {
   it('Tatkal Booking Begins......', () => {
     cy.viewport(1478, 1056)
     cy.visit('https://www.irctc.co.in/nget/train-search')
+    cy.task("log", 'Fetching Completed')
     cy.get('.h_head1 > .search_btn').click()
     cy.get(':nth-child(1) > .form-control').invoke('val', username).trigger('input')
     cy.get(':nth-child(2) > .form-control').invoke('val', password).trigger('input')
@@ -57,7 +58,7 @@ describe('IRCTC TATKAL BOOKING', () => {
         if (div[0].innerText.includes(TRAIN_NO) && div[0].innerText.includes(TRAIN_COACH)) {
 
           cy.bookUntilTatkalGetsOpen(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO, TATKAL).then(() => {
-            console.log('TATKAL TIME STARTED......')
+            cy.task("log", 'TATKAL TIME STARTED......')
           })
 
           // this is to ensure that Form Page has been opened up so until it fetches it all other execution would be blocked
@@ -126,11 +127,11 @@ describe('IRCTC TATKAL BOOKING', () => {
                 cy.wrap(inputField).clear().type(PASSENGER['NAME']);
               } else {
                 // Log an error if 'NAME' property is missing in passenger object
-                console.error(`'NAME' property missing in passenger object at index ${index}`);
+                cy.task("log", `'NAME' property missing in passenger object at index ${index}`);
               }
             } else {
               // Log an error if PASSENGER_DETAILS is missing or insufficient data
-              console.error(`PASSENGER_DETAILS is missing or insufficient data for index ${index}`);
+              cy.task("log", `PASSENGER_DETAILS is missing or insufficient data for index ${index}`);
             }
           })
 
@@ -230,8 +231,8 @@ describe('IRCTC TATKAL BOOKING', () => {
             // https://securegw.paytm.in/theia/processTransaction?orderid=100004437462426
 
             cy.wait("@payment", { timeout: 200000 }).then((interception) => {
-              cy.log(interception)
-              console.log(interception.response.body)
+              cy.task("log", interception)
+              cy.task("log", interception.response.body)
 
               // MAKE SURE UPI ID EXIST THEN PROCEED PLEASE FILL UPI_ID VALUE IN cypress/fixtures/passenger_data.json as something like this "123713278162@paytm"
               if (UPI_ID) {
