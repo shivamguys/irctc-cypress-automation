@@ -34,8 +34,7 @@ if __name__ == "__main__":
         description="Extract text from a base64 encoded image."
     )
     parser.add_argument(
-        "--image-base-64",
-        dest="image",
+        "image",
         type=str,
         nargs="?",
         default="",
@@ -44,7 +43,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     if args.image == "":
-        print("No --image-base-64 provided")
+        print("No base-64 String provided")
     else:
         extracted_text = extract_text_from_image(args.image)
         print(extracted_text)

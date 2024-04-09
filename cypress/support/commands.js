@@ -61,8 +61,7 @@ function performLogin(LOGGED_IN) {
                     // get captcha value base64 starts---------
                     cy.get('.captcha-img').invoke('attr', 'src').then((value) => {
                         // api call to retrieve captcha value
-                        cy.task("log", `python3 irctc-captcha-solver/app.py --image-base-64 "${value}"`)
-                        cy.exec(`python3 irctc-captcha-solver/app.py --image-base-64 "${value}"`).then((result) => {
+                        cy.exec(`python3 irctc-captcha-solver/app.py "${value}"`).then((result) => {
                             cy.get('#captcha').type(result.stdout).type('{enter}');
                             // cy.contains('SIGN IN').click()
                             cy.get('body').then((el) => {
@@ -143,7 +142,7 @@ function solveCaptcha() {
                 // get captcha value base64 starts---------
                 cy.get('.captcha-img').invoke('attr', 'src').then((value) => {
                     // api call to retrieve captcha value
-                    cy.exec(`python3 irctc-captcha-solver/app.py --image-base-64 "${value}"`).then((result) => {
+                    cy.exec(`python3 irctc-captcha-solver/app.py "${value}"`).then((result) => {
 
                         cy.get('#captcha').type(result.stdout).type('{enter}')
                         cy.get('body').then((el) => {
