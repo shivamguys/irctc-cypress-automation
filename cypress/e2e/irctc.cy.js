@@ -7,7 +7,7 @@ describe('IRCTC TATKAL BOOKING', () => {
   it('Tatkal Booking Begins......', () => {
     cy.viewport(1478, 1056)
     cy.visit('https://www.irctc.co.in/nget/train-search')
-    cy.task("log", `Website Fetching completed......... ${username + '@'}   ${username} and ${password}`)
+    cy.task("log", `Website Fetching completed.........`)
     const UPI_ID = Cypress.env().UPI_ID ? Cypress.env().UPI_ID : UPI_ID_CONFIG;
     cy.get('.h_head1 > .search_btn').click()
     cy.get(':nth-child(1) > .form-control').invoke('val', username).trigger('input')
