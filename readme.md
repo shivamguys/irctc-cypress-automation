@@ -15,7 +15,7 @@
 > activities.
 > ```
 
-[![IRCTC Automation](https://github.com/shivamguys/irctc-cypress-automation/actions/workflows/main.yml/badge.svg)](https://github.com/shivamguys/irctc-cypress-automation/actions/workflows/main.yml)
+[![IRCTC Automation](https://github.com/shivamguys/irctc-cypress-automation/actions/workflows/irctc.yml/badge.svg)](https://github.com/shivamguys/irctc-cypress-automation/actions/workflows/irctc.yml)
 
 [![IRCTC Automation](https://img.shields.io/endpoint?url=https://cloud.cypress.io/badge/simple/7afdkj/main&style=for-the-badge&logo=cypress)](https://cloud.cypress.io/projects/7afdkj/runs)
 
@@ -179,9 +179,9 @@ pip3 install -r irctc-captcha-solver/requirements.txt # <---- Make Sure You Run 
 ```
 
 #### Check If Everything Works Fine.... 
-This Would Print **No --image-base-64 provided** Which Means You Have Followed Correctly at this point.
+This Would Print **No base-64 String provided** Which Means You Have Followed Correctly at this point.
 ```
-python irctc-captcha-solver/app.py --image-base-64 ""
+python irctc-captcha-solver/app.py ""
 ```
 
 

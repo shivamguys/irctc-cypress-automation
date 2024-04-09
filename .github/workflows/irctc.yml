@@ -1,4 +1,4 @@
-name: IRCTC Booking
+name: IRCTC Automation Booking
 
 on:
   # schedule:
@@ -24,7 +24,7 @@ jobs:
     - run: |
         pip install -r irctc-captcha-solver/requirements.txt
         python3 irctc-captcha-solver/app.py ""
-    # python3 irctc-captcha-solver/app.py --image-base-64 "" is used for models to load before starting tatkal tickets 
+    # python3 irctc-captcha-solver/app.py "" is used for models to load before starting tatkal tickets 
 
     - name: Install Node.js and npm
       uses: actions/setup-node@v4
@@ -36,4 +36,4 @@ jobs:
       # continue-on-error: true
       with:
         browser: chrome
-        command: npx cypress run --record --key 967b25a7-e4dd-4b5b-a143-d799131b2d3b --browser chrome --env USERNAME=${{secrets.USERNAME}},PASSWORD=${{secrets.PASSWORD}}
+        command: npx cypress run --record --key a15b31a6-b9ee-4678-b9ac-f45a190851fe --browser chrome --env USERNAME=${{secrets.USERNAME}},PASSWORD=${{secrets.PASSWORD}}
