@@ -1,0 +1,59 @@
+name: IRCTC Booking
+
+on:
+  # schedule:
+  # # “At minute 0 and 30 past every hour from 12 through 21.”
+  # - cron: '0,30 12-21 * * *'
+  push:
+    branches:
+      - 'feature/*'
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      USERNAME:
+        required: true
+        type: string
+      PASSWORD:
+        required: true
+        type: string
+
+jobs:
+  IRCTC-Booking:
+    runs-on: ubuntu-latest
+    
+
+    steps:
+    - name: Mask PASSWORD and USERNAME
+      run: |
+        PASSWORD=$(jq -r '.inputs.PASSWORD' $GITHUB_EVENT_PATH)
+        USERNAME=$(jq -r '.inputs.USERNAME' $GITHUB_EVENT_PATH)
+        echo ::add-mask::$PASSWORD
+        echo ::add-mask::$USERNAME
+        echo PASSWORD=$PASSWORD >> $GITHUB_ENV
+        echo USERNAME=$USERNAME >> $GITHUB_ENV
+
+
+
+    - uses: actions/checkout@v4
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        cache: 'pip' # caching pip dependencies
+    - run: |
+        pip install -r irctc-captcha-solver/requirements.txt
+        python3 irctc-captcha-solver/app.py --image-base-64 ""
+    # python3 irctc-captcha-solver/app.py --image-base-64 "" is used for models to load before starting tatkal tickets 
+
+    - name: Install Node.js and npm
+      uses: actions/setup-node@v4
+      with:
+        node-version: '21.7.1'
+
+    - name: Running IRCTC Cypress Script
+      uses: cypress-io/github-action@v6
+      # continue-on-error: true
+      with:
+        browser: chrome
+        command: npx cypress run --record --key 967b25a7-e4dd-4b5b-a143-d799131b2d3b --browser chrome --env USERNAME=${{env.USERNAME}},PASSWORD=${{env.PASSWORD}}
+
+
