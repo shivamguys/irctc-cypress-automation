@@ -6,16 +6,9 @@ on:
   # - cron: '0,30 12-21 * * *'
   push:
     branches:
-      - 'feature/*'
+      - 'main'
   pull_request:
   workflow_dispatch:
-    inputs:
-      USERNAME:
-        required: true
-        type: string
-      PASSWORD:
-        required: true
-        type: string
 
 jobs:
   IRCTC-Booking:
@@ -43,4 +36,4 @@ jobs:
       # continue-on-error: true
       with:
         browser: chrome
-        command: npx cypress run --record --key 967b25a7-e4dd-4b5b-a143-d799131b2d3b --browser chrome --env USERNAME=${{inputs.USERNAME}},PASSWORD=${{inputs.PASSWORD}}
+        command: npx cypress run --record --key 967b25a7-e4dd-4b5b-a143-d799131b2d3b --browser chrome --env USERNAME=${{secrets.USERNAME}},PASSWORD=${{secrets.PASSWORD}}
