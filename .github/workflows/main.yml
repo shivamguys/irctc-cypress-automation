@@ -30,11 +30,9 @@ jobs:
       with:
         python-version: '3.11'
         cache: 'pip' # caching pip dependencies
-    - run: |
-        pip install -r irctc-captcha-solver/requirements.txt
-        python3 irctc-captcha-solver/app.py --image-base-64 ""
-    # python3 irctc-captcha-solver/app.py --image-base-64 "" is used for models to load before starting tatkal tickets 
-
+    - run: pip install -r irctc-captcha-solver/requirements.txt
+    - run: python3 irctc-captcha-solver/app.py --image-base-64 "" # python3 irctc-captcha-solver/app.py --image-base-64 "" is used for models to load before starting tatkal tickets 
+    
     - name: Install Node.js and npm
       uses: actions/setup-node@v4
       with:
@@ -45,6 +43,6 @@ jobs:
       # continue-on-error: true
       with:
         browser: chrome
-        command: npx cypress run --record --key 967b25a7-e4dd-4b5b-a143-d799131b2d3b --env USERNAME=${{inputs.USERNAME}},PASSWORD=${{inputs.PASSWORD}}
+        command: npx cypress run --record --key 967b25a7-e4dd-4b5b-a143-d799131b2d3b --browser chrome --env USERNAME=${{inputs.USERNAME}},PASSWORD=${{inputs.PASSWORD}}
 
 
