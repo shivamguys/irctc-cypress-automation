@@ -61,12 +61,10 @@ function performLogin(LOGGED_IN) {
                     // get captcha value base64 starts---------
                     cy.get('.captcha-img').invoke('attr', 'src').then((value) => {
                         // api call to retrieve captcha value
-                        cy.task("log", `python3 irctc-captcha-solver/app.py "${value}"`)
 
                         cy.exec(`python3 irctc-captcha-solver/app.py "${value}"`).then((result) => {
                             cy.get('#captcha').type(result.stdout).type('{enter}');
                             // cy.contains('SIGN IN').click()
-                            cy.task("log", `stdout-> "${result.stdout}"`)
 
                             cy.get('body').then((el) => {
                                 if (el[0].innerText.includes('Invalid Captcha')) {
