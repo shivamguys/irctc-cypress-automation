@@ -19,12 +19,12 @@ describe('IRCTC TATKAL BOOKING', () => {
 
 
       // from station
-      cy.get('.ui-autocomplete > .ng-tns-c57-8').should('be.visible').type(SOURCE_STATION)
+      cy.get('.ui-autocomplete > .ng-tns-c57-8').should('be.visible').type(SOURCE_STATION, { delay: 200 })
       // cy.wait(600)
       cy.get('#p-highlighted-option').should('be.visible').click()
 
       // to station
-      cy.get('.ui-autocomplete > .ng-tns-c57-9').should('be.visible').type(DESTINATION_STATION)
+      cy.get('.ui-autocomplete > .ng-tns-c57-9').should('be.visible').type(DESTINATION_STATION, { delay: 200 })
       // cy.wait(600)
       cy.get('#p-highlighted-option').should('be.visible').click()
 

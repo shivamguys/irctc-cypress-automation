@@ -144,6 +144,13 @@ function solveCaptcha() {
                 })
             } else {
 
+                if (el[0].innerText.includes('Payment Methods')) {
+
+                    cy.task("log", "CAPTCHA .... SOLVED")
+                    solveCaptcha()
+
+                }
+
                 // get captcha value base64 starts---------
                 cy.get('.captcha-img').invoke('attr', 'src').then((value) => {
                     // api call to retrieve captcha value
