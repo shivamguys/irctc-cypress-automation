@@ -7,12 +7,10 @@ on:
   workflow_dispatch:
     inputs:
       USERNAME:
-        default: ${{ secrets.USERNAME }}
         required: true
         type: string
         description: "Your IRCTC Username"
       PASSWORD:
-        default: ${{ secrets.PASSWORD }}
         required: true
         type: string
         description: "Your IRCTC Password"
@@ -45,4 +43,4 @@ jobs:
       uses: cypress-io/github-action@v6
       with:
         browser: chrome
-        command: npx cypress run --record --key a15b31a6-b9ee-4678-b9ac-f45a190851fe --browser chrome --env USERNAME=${{ inputs.USERNAME }},PASSWORD=${{ inputs.PASSWORD }}
+        command: npx cypress run --record --key a15b31a6-b9ee-4678-b9ac-f45a190851fe --browser chrome --env USERNAME=${{ inputs.USERNAME || secrets.USERNAME }},PASSWORD=${{ inputs.PASSWORD || secrets.PASSWORD }}
