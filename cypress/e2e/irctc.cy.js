@@ -204,7 +204,11 @@ describe('IRCTC TATKAL BOOKING', () => {
 
 
           // if next page opens which is review booking stage
+          cy.task("log", `.........Solving Second Stage Captchas solveCaptcha()`)
+
           cy.solveCaptcha().then(() => {
+            cy.task("log", `Solved Second Stage Captchas solveCaptcha()`)
+
             // BHIM UPI At Gateway Confirmation
             cy.get(':nth-child(3) > .col-pad').click()
             cy.get('.col-sm-9 > app-bank > #bank-type').click()
