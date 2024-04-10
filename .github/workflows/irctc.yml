@@ -6,11 +6,6 @@ on:
   pull_request:
   workflow_dispatch:
     inputs:
-      UPI_ID:
-        default: ""
-        required: false
-        type: string
-        description: "Your UPI ID To Make Payment From"
       USERNAME:
         required: true
         type: string
@@ -19,6 +14,11 @@ on:
         required: true
         type: string
         description: "Your IRCTC Password"
+      UPI_ID:
+        default: ""
+        required: false
+        type: string
+        description: "Your UPI ID To Make Payment From"
 jobs:
   IRCTC-Booking:
     runs-on: ubuntu-latest
