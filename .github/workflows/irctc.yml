@@ -6,6 +6,11 @@ on:
   pull_request:
   workflow_dispatch:
     inputs:
+      UPI_ID:
+        default: ""
+        required: false
+        type: string
+        description: "Your UPI ID To Make Payment From"
       USERNAME:
         required: true
         type: string
@@ -29,10 +34,16 @@ jobs:
         python3 irctc-captcha-solver/app.py "" # python3 irctc-captcha-solver/app.py "" is used for models to load before starting tatkal tickets 
         PASSWORD=$(jq -r '.inputs.PASSWORD' $GITHUB_EVENT_PATH)
         USERNAME=$(jq -r '.inputs.USERNAME' $GITHUB_EVENT_PATH)
+        UPI_ID=$(jq -r '.inputs.UPI_ID' $GITHUB_EVENT_PATH)
+
         echo ::add-mask::$PASSWORD
         echo ::add-mask::$USERNAME
+        echo ::add-mask::$UPI_ID
+
         echo PASSWORD=$PASSWORD >> $GITHUB_ENV
         echo USERNAME=$USERNAME >> $GITHUB_ENV
+        echo UPI_ID=$UPI_ID >> $GITHUB_ENV
+
 
     # python3 irctc-captcha-solver/app.py "" is used for models to load before starting tatkal tickets 
 
@@ -45,4 +56,4 @@ jobs:
       uses: cypress-io/github-action@v6
       with:
         browser: chrome
-        command: npx cypress run --record --key a15b31a6-b9ee-4678-b9ac-f45a190851fe --env USERNAME=${{ inputs.USERNAME || secrets.USERNAME }},PASSWORD=${{ inputs.PASSWORD || secrets.PASSWORD }}
+        command: npx cypress run --record --key a15b31a6-b9ee-4678-b9ac-f45a190851fe --env UPI_ID=${{ env.UPI_ID }},USERNAME=${{ inputs.USERNAME || secrets.USERNAME }},PASSWORD=${{ inputs.PASSWORD || secrets.PASSWORD }}
