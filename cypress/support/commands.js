@@ -138,7 +138,6 @@ function solveCaptcha() {
         }
 
         // Check whether we are at reviewBooking stage or not if yes keep on solving captcha
-        console.log(el)
 
         if (el[0].innerText.includes('Your ticket will be sent to') && !(el[0].innerText.includes('Please Wait...')) && (el[0].innerHTML.includes('Enter Captcha'))) {
 
@@ -151,13 +150,6 @@ function solveCaptcha() {
                     }
                 })
             } else {
-
-                if (el[0].innerText.includes('Payment Methods')) {
-
-                    cy.task("log", "CAPTCHA .... SOLVED")
-                    return
-
-                }
 
                 // get captcha value base64 starts---------
                 cy.get('.captcha-img').invoke('attr', 'src').then((value) => {
