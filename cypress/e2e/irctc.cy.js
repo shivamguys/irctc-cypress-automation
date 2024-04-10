@@ -231,7 +231,7 @@ describe('IRCTC TATKAL BOOKING', () => {
               if (UPI_ID) {
                 cy.get('#ptm-upi').click()
                 cy.get('.brdr-box > :nth-child(2) > ._1WLd > :nth-child(1) > .xs-hover-box > ._Mzth > .form-ctrl').type(UPI_ID)
-                cy.get('.btn').click()
+                cy.get(':nth-child(5) > section > .btn').click()
                 // Waiting For 2 Mins for the user to pay In Case --no-exit option is emitted
                 cy.wait(120000)
 

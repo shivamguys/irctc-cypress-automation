@@ -1,3 +1,4 @@
+name: IRCTC Automation Booking
 on:
   push:
     branches:
@@ -17,7 +18,6 @@ on:
         required: true
         type: string
         description: "Your IRCTC Password"
-name: "IRCTC Automation Booking ${{ inputs.BOOKING_DESC }}"
 jobs:
   IRCTC-Booking:
     runs-on: ubuntu-latest
@@ -49,4 +49,4 @@ jobs:
       uses: cypress-io/github-action@v6
       with:
         browser: chrome
-        command: npx cypress run --record --key a15b31a6-b9ee-4678-b9ac-f45a190851fe --browser chrome --env USERNAME=${{ inputs.USERNAME || secrets.USERNAME }},PASSWORD=${{ inputs.PASSWORD || secrets.PASSWORD }}
+        command: npx cypress run --record --key a15b31a6-b9ee-4678-b9ac-f45a190851fe --env USERNAME=${{ inputs.USERNAME || secrets.USERNAME }},PASSWORD=${{ inputs.PASSWORD || secrets.PASSWORD }}
