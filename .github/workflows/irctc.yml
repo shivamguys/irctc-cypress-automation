@@ -6,10 +6,6 @@ on:
   pull_request:
   workflow_dispatch:
     inputs:
-      BOOKING_DESC:
-        required: true
-        type: string
-        description: "Give Any Name To Your Booking"
       USERNAME:
         required: true
         type: string
