@@ -9,6 +9,10 @@ describe('IRCTC TATKAL BOOKING', () => {
     cy.visit('https://www.irctc.co.in/nget/train-search')
     cy.task("log", `Website Fetching completed.........`)
     const UPI_ID = Cypress.env().UPI_ID ? Cypress.env().UPI_ID : UPI_ID_CONFIG;
+    const upiRegex = /^[a-zA-Z0-9]+@[a-zA-Z0-9.]+$/;
+
+    const isValidUpiId = upiRegex.test(UPI_ID);
+
     cy.get('.h_head1 > .search_btn').click()
     cy.get(':nth-child(1) > .form-control').invoke('val', username).trigger('input')
     cy.get(':nth-child(2) > .form-control').invoke('val', password).trigger('input')
@@ -228,7 +232,7 @@ describe('IRCTC TATKAL BOOKING', () => {
               console.log(interception.response.body)
 
               // MAKE SURE UPI ID EXIST THEN PROCEED PLEASE FILL UPI_ID VALUE IN cypress/fixtures/passenger_data.json as something like this "123713278162@paytm"
-              if (UPI_ID) {
+              if (UPI_ID && isValidUpiId) {
                 cy.get('#ptm-upi').click()
                 cy.get('.brdr-box > :nth-child(2) > ._1WLd > :nth-child(1) > .xs-hover-box > ._Mzth > .form-ctrl').type(UPI_ID)
                 cy.get(':nth-child(5) > section > .btn').click()
