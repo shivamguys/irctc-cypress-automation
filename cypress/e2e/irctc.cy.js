@@ -100,20 +100,6 @@ describe('IRCTC TATKAL BOOKING', () => {
 
           }
 
-          /*
-          OLD FILLING NAME CODE, CHECKING IF BELOW NEW ONE IS STABLE OR NOT............WOULD BE REMOVED LATER IF BELOW ONE WORKS
-          cy.get('.ui-autocomplete >').each((inputDiv, index) => {
-            
-              cy.wrap(inputDiv).click()
-              cy.wrap(inputDiv).focused().clear()
-              let PASSENGER = PASSENGER_DETAILS[index]
-              cy.wrap(inputDiv).invoke('val', PASSENGER['NAME']).trigger('input')
-            
-            
-            
-            })
-            */
-
 
           // FOR NAME
           cy.get('.ui-autocomplete input').each((inputField, index) => {
@@ -124,6 +110,7 @@ describe('IRCTC TATKAL BOOKING', () => {
 
               // Check if the passenger object contains 'NAME' property
               if (PASSENGER && PASSENGER['NAME']) {
+                cy.task("log", 'Passenger Filing STARTED......')
                 // Clear the input field and set its value to the passenger's name
                 cy.wrap(inputField).clear().type(PASSENGER['NAME']);
               } else {
@@ -144,6 +131,7 @@ describe('IRCTC TATKAL BOOKING', () => {
             let PASSENGER = PASSENGER_DETAILS[index]
 
             cy.wrap(inputDiv).invoke('val', PASSENGER['AGE']).trigger('input')
+            cy.task("log", 'Age Filing STARTED......')
 
           })
 

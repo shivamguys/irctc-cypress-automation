@@ -1,5 +1,4 @@
 node_modules/
-cypress.env.json
 .idea
 cypress/videos/
 cypress/screenshots/
