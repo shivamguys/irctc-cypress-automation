@@ -8,11 +8,15 @@ on:
   workflow_dispatch:
     inputs:
       USERNAME:
+        default: {{ secrets.USERNAME }}
         required: true
         type: string
+        description: "Your IRCTC Username"
       PASSWORD:
+        default: {{ secrets.PASSWORD }}
         required: true
         type: string
+        description: "Your IRCTC Password"
 
 jobs:
   IRCTC-Booking:
@@ -26,16 +30,6 @@ jobs:
         cache: 'pip' # caching pip dependencies
     - run: |
         pip install -r irctc-captcha-solver/requirements.txt
-        if [ -z "${{ env.USERNAME }}" ]; then
-          USERNAME="${{ secrets.USERNAME }}"
-        else
-          USERNAME="${{ env.USERNAME }}"
-        fi
-        if [ -z "${{ env.PASSWORD }}" ]; then
-          PASSWORD="${{ secrets.PASSWORD }}"
-        else
-          PASSWORD="${{ env.PASSWORD }}"
-        fi
         echo ::add-mask::$PASSWORD
         echo ::add-mask::$USERNAME
         echo PASSWORD=$PASSWORD >> $GITHUB_ENV
@@ -52,4 +46,4 @@ jobs:
       uses: cypress-io/github-action@v6
       with:
         browser: chrome
-        command: npx cypress run --record --key a15b31a6-b9ee-4678-b9ac-f45a190851fe --browser chrome --env USERNAME=${{ env.USERNAME }},PASSWORD=${{ env.PASSWORD }}
+        command: npx cypress run --record --key a15b31a6-b9ee-4678-b9ac-f45a190851fe --browser chrome --env USERNAME=${{ inputs.USERNAME }},PASSWORD=${{ inputs.PASSWORD }}
