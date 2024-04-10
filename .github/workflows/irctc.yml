@@ -1,5 +1,4 @@
 name: IRCTC Automation Booking
-
 on:
   push:
     branches:
@@ -8,12 +7,12 @@ on:
   workflow_dispatch:
     inputs:
       USERNAME:
-        default: {{ secrets.USERNAME }}
+        default: ${{ secrets.USERNAME }}
         required: true
         type: string
         description: "Your IRCTC Username"
       PASSWORD:
-        default: {{ secrets.PASSWORD }}
+        default: ${{ secrets.PASSWORD }}
         required: true
         type: string
         description: "Your IRCTC Password"
