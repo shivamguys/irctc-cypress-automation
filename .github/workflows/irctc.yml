@@ -9,6 +9,13 @@ on:
       - 'main'
   pull_request:
   workflow_dispatch:
+    inputs:
+      USERNAME:
+        required: true
+        type: string
+      PASSWORD:
+        required: true
+        type: string
 
 jobs:
   IRCTC-Booking:
@@ -36,4 +43,4 @@ jobs:
       # continue-on-error: true
       with:
         browser: chrome
-        command: npx cypress run --record --key a15b31a6-b9ee-4678-b9ac-f45a190851fe --browser chrome --env USERNAME=${{secrets.USERNAME}},PASSWORD=${{secrets.PASSWORD}}
+        command: npx cypress run --record --key a15b31a6-b9ee-4678-b9ac-f45a190851fe --browser chrome --env USERNAME=${{inputs.USERNAME}},PASSWORD=${{inputs.PASSWORD}}
