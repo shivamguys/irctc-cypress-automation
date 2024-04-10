@@ -122,6 +122,7 @@ function performLogin(LOGGED_IN) {
 
 
 function solveCaptcha() {
+    cy.task("log", "Calling solveCaptcha() nth time")
 
     cy.wait(1200)
     cy.get('body').should('be.visible').then((el) => {
