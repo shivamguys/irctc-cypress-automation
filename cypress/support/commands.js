@@ -138,7 +138,9 @@ function solveCaptcha() {
         }
 
         // Check whether we are at reviewBooking stage or not if yes keep on solving captcha
-        if (el[0].innerText.includes('Your ticket will be sent to') && !(el[0].innerText.includes('Please Wait...')) && (el[0].innerText.includes('Enter Captcha'))) {
+        console.log(el)
+
+        if (el[0].innerText.includes('Your ticket will be sent to') && !(el[0].innerText.includes('Please Wait...')) && (el[0].innerHTML.includes('Enter Captcha'))) {
 
 
             if (MANUAL_CAPTCHA) {
