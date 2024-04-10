@@ -126,6 +126,12 @@ function solveCaptcha() {
 
     cy.wait(1200)
     cy.get('body').should('be.visible').then((el) => {
+        if (el[0].innerText.includes('Payment Methods')) {
+
+            cy.task("log", "CAPTCHA .... SOLVED")
+            return
+
+        }
 
         if (el[0].innerText.includes('No seats available')) {
             cy.fail('Further execution stopped because there are no more tickets.');
@@ -147,7 +153,7 @@ function solveCaptcha() {
                 if (el[0].innerText.includes('Payment Methods')) {
 
                     cy.task("log", "CAPTCHA .... SOLVED")
-                    solveCaptcha()
+                    return
 
                 }
 
