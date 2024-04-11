@@ -181,7 +181,7 @@ function solveCaptcha() {
         }
         else if (el[0].innerText.includes('Payment Methods')) {
 
-            cy.task("log", "CAPTCHA .... SOLVED")
+            return
         }
         else {
             solveCaptcha()
