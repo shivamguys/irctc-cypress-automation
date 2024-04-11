@@ -5,8 +5,19 @@ import { PASSENGER_DETAILS, SOURCE_STATION, DESTINATION_STATION, TRAIN_NO, TRAIN
 
 describe('IRCTC TATKAL BOOKING', () => {
   it('Tatkal Booking Begins......', () => {
+    // Catching Load Event Exception
+    cy.on('fail', (err, runnable) => {
+      if (String(err).includes('Your page did not fire its `load` event')) {
+        return true
+      }
+      else {
+        return false
+
+      }
+    })
+
     cy.viewport(1478, 1056)
-    cy.visit('https://www.irctc.co.in/nget/train-search')
+    cy.visit('https://www.irctc.co.in/nget/train-search', { timeout: 20000 })
     cy.task("log", `Website Fetching completed.........`)
     const UPI_ID = Cypress.env().UPI_ID ? Cypress.env().UPI_ID : UPI_ID_CONFIG;
     const upiRegex = /^[a-zA-Z0-9]+@[a-zA-Z0-9.]+$/;
@@ -228,8 +239,8 @@ describe('IRCTC TATKAL BOOKING', () => {
             // https://securegw.paytm.in/theia/processTransaction?orderid=100004437462426
 
             cy.wait("@payment", { timeout: 200000 }).then((interception) => {
-              console.log(interception)
-              console.log(interception.response.body)
+              // console.log(interception)
+              // console.log(interception.response.body)
 
               // MAKE SURE UPI ID EXIST THEN PROCEED PLEASE FILL UPI_ID VALUE IN cypress/fixtures/passenger_data.json as something like this "123713278162@paytm"
               if (UPI_ID && isValidUpiId) {
