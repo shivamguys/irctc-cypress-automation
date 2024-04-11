@@ -3,21 +3,19 @@ let username = Cypress.env('USERNAME')
 let password = Cypress.env('PASSWORD')
 import { PASSENGER_DETAILS, SOURCE_STATION, DESTINATION_STATION, TRAIN_NO, TRAIN_COACH, TRAVEL_DATE, TATKAL, BOARDING_STATION, UPI_ID_CONFIG } from '../fixtures/passenger_data.json'
 
+
+
+
 describe('IRCTC TATKAL BOOKING', () => {
   it('Tatkal Booking Begins......', () => {
     // Catching Load Event Exception..
-    cy.on('fail', (err, runnable) => {
-      if (String(err).includes('Your page did not fire its `load` event')) {
-        return true
-      }
-      else {
-        return false
-
-      }
-    })
 
     cy.viewport(1478, 1056)
-    cy.visit('https://www.irctc.co.in/nget/train-search', { timeout: 48000 })
+    cy.visit('https://www.irctc.co.in/nget/train-search', {
+      failOnStatusCode: false
+    })
+
+
     cy.task("log", `Website Fetching completed.........`)
     const UPI_ID = Cypress.env().UPI_ID ? Cypress.env().UPI_ID : UPI_ID_CONFIG;
     const upiRegex = /^[a-zA-Z0-9]+@[a-zA-Z0-9.]+$/;
