@@ -29,6 +29,9 @@ jobs:
         python-version: '3.11'
         cache: 'pip' # caching pip dependencies
     - run: |
+        ls -d ~/.EasyOCR/*/ | while read dir; do
+            echo "Directory: $dir"
+          done
         pip install -r irctc-captcha-solver/requirements.txt
         python3 irctc-captcha-solver/app.py "" # python3 irctc-captcha-solver/app.py "" is used for models to load before starting tatkal tickets 
         PASSWORD=$(jq -r '.inputs.PASSWORD' $GITHUB_EVENT_PATH)
@@ -42,6 +45,9 @@ jobs:
         echo PASSWORD=$PASSWORD >> $GITHUB_ENV
         echo USERNAME=$USERNAME >> $GITHUB_ENV
         echo UPI_ID=$UPI_ID >> $GITHUB_ENV
+        ls -d ~/.EasyOCR/*/ | while read dir; do
+            echo "Directory: $dir"
+          done
 
 
     # python3 irctc-captcha-solver/app.py "" is used for models to load before starting tatkal tickets 
