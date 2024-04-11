@@ -17,7 +17,7 @@ describe('IRCTC TATKAL BOOKING', () => {
     })
 
     cy.viewport(1478, 1056)
-    cy.visit('https://www.irctc.co.in/nget/train-search', { timeout: 20000 })
+    cy.visit('https://www.irctc.co.in/nget/train-search', { timeout: 60000 })
     cy.task("log", `Website Fetching completed.........`)
     const UPI_ID = Cypress.env().UPI_ID ? Cypress.env().UPI_ID : UPI_ID_CONFIG;
     const upiRegex = /^[a-zA-Z0-9]+@[a-zA-Z0-9.]+$/;
