@@ -5,7 +5,7 @@ import { PASSENGER_DETAILS, SOURCE_STATION, DESTINATION_STATION, TRAIN_NO, TRAIN
 
 describe('IRCTC TATKAL BOOKING', () => {
   it('Tatkal Booking Begins......', () => {
-    // Catching Load Event Exception
+    // Catching Load Event Exception..
     cy.on('fail', (err, runnable) => {
       if (String(err).includes('Your page did not fire its `load` event')) {
         return true
