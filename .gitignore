@@ -3,3 +3,4 @@ node_modules/
 cypress/videos/
 cypress/screenshots/
 irctc-captcha-solver/__pycache__
+cypress/downloads/

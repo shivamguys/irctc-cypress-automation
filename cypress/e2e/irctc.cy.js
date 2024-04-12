@@ -3,7 +3,11 @@ let username = Cypress.env('USERNAME')
 let password = Cypress.env('PASSWORD')
 import { PASSENGER_DETAILS, SOURCE_STATION, DESTINATION_STATION, TRAIN_NO, TRAIN_COACH, TRAVEL_DATE, TATKAL, BOARDING_STATION, UPI_ID_CONFIG } from '../fixtures/passenger_data.json'
 
-
+Cypress.on('uncaught:exception', (err, runnable) => {
+  // returning false here prevents Cypress from
+  // failing the test
+  return false
+})
 
 
 describe('IRCTC TATKAL BOOKING', () => {
