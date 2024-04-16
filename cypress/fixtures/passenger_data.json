@@ -1,12 +1,12 @@
 {
-  "TRAIN_NO": "11072",
-  "TRAIN_COACH": "2A",
-  "TRAVEL_DATE": "12/05/2024",
-  "SOURCE_STATION": "BSB",
+  "TRAIN_NO": "15053",
+  "TRAIN_COACH": "SL",
+  "TRAVEL_DATE": "14/05/2024",
+  "SOURCE_STATION": "GCT",
   "BOARDING_STATION": null,
-  "DESTINATION_STATION": "LTT",
+  "DESTINATION_STATION": "BSB",
   "TATKAL": false,
-  "UPI_ID": "",
+  "UPI_ID_CONFIG": "",
   "PASSENGER_DETAILS": [
     {
       "NAME": "Shivam Pandey",

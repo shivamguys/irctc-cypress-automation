@@ -35,7 +35,7 @@ function performLogin(LOGGED_IN) {
 
     // if starts
     if (!LOGGED_IN) {
-        cy.wait(1300)
+        cy.wait(500)
 
         cy.get('body').should('be.visible').then((el) => {
 
@@ -62,7 +62,7 @@ function performLogin(LOGGED_IN) {
                         // api call to retrieve captcha value
 
                         cy.exec(`python3 irctc-captcha-solver/app.py "${value}"`).then((result) => {
-                            cy.get('#captcha').type(result.stdout).type('{enter}');
+                            cy.get('#captcha').clear().type(result.stdout).type('{enter}');
                             // cy.contains('SIGN IN').click()
 
                             cy.get('body').then((el) => {
@@ -121,7 +121,7 @@ function performLogin(LOGGED_IN) {
 function solveCaptcha() {
     cy.task("log", "Calling solveCaptcha() nth time")
 
-    cy.wait(1200)
+    cy.wait(500)
     cy.get('body').should('be.visible').then((el) => {
         if (el[0].innerText.includes('Payment Methods')) {
 
@@ -153,14 +153,10 @@ function solveCaptcha() {
                     // api call to retrieve captcha value
                     cy.exec(`python3 irctc-captcha-solver/app.py "${value}"`).then((result) => {
 
-                        cy.get('#captcha').type(result.stdout).type('{enter}')
+                        cy.get('#captcha').clear().type(result.stdout).type('{enter}')
                         cy.get('body').then((el) => {
-                            if (el[0].innerText.includes('Your ticket will be sent to')) {
 
-                                solveCaptcha()
-
-                            }
-                            else if (el[0].innerText.includes('Payment Methods')) {
+                            if (el[0].innerText.includes('Payment Methods')) {
                                 cy.task("log", "Bypassed Captcha")
                             }
                             else {

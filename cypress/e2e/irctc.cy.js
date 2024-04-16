@@ -13,7 +13,8 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 describe('IRCTC TATKAL BOOKING', () => {
   it('Tatkal Booking Begins......', () => {
     // Catching Load Event Exception..
-
+    cy.clearCookies()
+    cy.clearLocalStorage()
     cy.viewport(1478, 1056)
     cy.visit('https://www.irctc.co.in/nget/train-search', {
       failOnStatusCode: false,
@@ -37,12 +38,12 @@ describe('IRCTC TATKAL BOOKING', () => {
 
 
       // from station
-      cy.get('.ui-autocomplete > .ng-tns-c57-8').should('be.visible').type(SOURCE_STATION, { delay: 200 })
+      cy.get('.ui-autocomplete > .ng-tns-c57-8').should('be.visible').type(SOURCE_STATION, { delay: 600 })
       // cy.wait(600)
       cy.get('#p-highlighted-option').should('be.visible').click()
 
       // to station
-      cy.get('.ui-autocomplete > .ng-tns-c57-9').should('be.visible').type(DESTINATION_STATION, { delay: 200 })
+      cy.get('.ui-autocomplete > .ng-tns-c57-9').should('be.visible').type(DESTINATION_STATION, { delay: 600 })
       // cy.wait(600)
       cy.get('#p-highlighted-option').should('be.visible').click()
 
