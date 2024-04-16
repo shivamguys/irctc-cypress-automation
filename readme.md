@@ -64,7 +64,7 @@
   "BOARDING_STATION": null, <-- Change to full station name if required, else leave null
   "DESTINATION_STATION": "BSB",
   "TATKAL": true,
-  "UPI_ID": "",
+  "UPI_ID_CONFIG": "",
   "PASSENGER_DETAILS": [
     {
       "NAME": "SHIVAM PANDEY",
@@ -101,7 +101,7 @@
   "BOARDING_STATION": null, <-- Change to full station name if required, else leave null
   "DESTINATION_STATION": "BSB",
   "TATKAL": true,
-  "UPI_ID": "",
+  "UPI_ID_CONFIG": "",
   "PASSENGER_DETAILS": [
     {
       "NAME": "SHIVAM PANDEY",
