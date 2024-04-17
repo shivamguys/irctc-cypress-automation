@@ -49,9 +49,9 @@ jobs:
     - name: Install Node.js and npm
       uses: actions/setup-node@v4
       with:
-        node-version: '18.12.0'
+        node-version: '21.7.1'
 
     - name: Running IRCTC Cypress Script
       uses: cypress-io/github-action@v6
       with:
-        command: npx cypress run --headed --record --key a15b31a6-b9ee-4678-b9ac-f45a190851fe --env UPI_ID=${{ inputs.UPI_ID || '' }},USERNAME=${{ inputs.USERNAME || secrets.USERNAME }},PASSWORD=${{ inputs.PASSWORD || secrets.PASSWORD }}
+        command: npx cypress run --browser chrome --record --key a15b31a6-b9ee-4678-b9ac-f45a190851fe --env UPI_ID=${{ inputs.UPI_ID || '' }},USERNAME=${{ inputs.USERNAME || secrets.USERNAME }},PASSWORD=${{ inputs.PASSWORD || secrets.PASSWORD }}
