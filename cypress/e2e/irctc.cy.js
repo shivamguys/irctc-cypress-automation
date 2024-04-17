@@ -1,7 +1,7 @@
 
 let username = Cypress.env('USERNAME')
 let password = Cypress.env('PASSWORD')
-import { PASSENGER_DETAILS, SOURCE_STATION, DESTINATION_STATION, TRAIN_NO, TRAIN_COACH, TRAVEL_DATE, TATKAL, BOARDING_STATION, UPI_ID_CONFIG } from '../fixtures/passenger_data.json'
+import { PASSENGER_DETAILS, SOURCE_STATION, DESTINATION_STATION, TRAIN_NO, TRAIN_COACH, TRAVEL_DATE, TATKAL, PREMIUM_TATKAL, BOARDING_STATION, UPI_ID_CONFIG } from '../fixtures/passenger_data.json'
 
 Cypress.on('uncaught:exception', (err, runnable) => {
   // returning false here prevents Cypress from
@@ -13,6 +13,11 @@ Cypress.on('uncaught:exception', (err, runnable) => {
 describe('IRCTC TATKAL BOOKING', () => {
   it('Tatkal Booking Begins......', () => {
     // Catching Load Event Exception..
+    if (TATKAL && PREMIUM_TATKAL) {
+      expect(false, 'Make Sure Either TATKAL or PREMIUM TATKAL is True. Not BOTH').to.be.true; // Ensure at least one variable is true (or both are false)
+
+    }
+
     cy.clearCookies()
     cy.clearLocalStorage()
     cy.viewport(1478, 1056)
@@ -55,10 +60,17 @@ describe('IRCTC TATKAL BOOKING', () => {
       cy.get('.ui-calendar').type(TRAVEL_DATE)
 
 
+
       // TATKAL or NORMAL BOOKING
       if (TATKAL) {
         cy.get('#journeyQuota > .ui-dropdown').click()
         cy.get(':nth-child(6) > .ui-dropdown-item').click()
+
+      }
+
+      if (PREMIUM_TATKAL) {
+        cy.get('#journeyQuota > .ui-dropdown').click()
+        cy.get(':nth-child(7) > .ui-dropdown-item').click()
 
       }
 
@@ -185,14 +197,22 @@ describe('IRCTC TATKAL BOOKING', () => {
 
 
 
-          // For Selecting "Book only if confirm berths are allotted.""
+
+          // For Selecting "Book only if confirm berths are allotted."" as well as Auto Upgradation
           cy.get('body').then((el) => {
 
             if (el[0].innerText.includes('Book only if confirm berths are allotted')) {
               cy.get(':nth-child(2) > .css-label_c').click()
 
             }
+            if (el[0].innerText.includes('Consider for Auto Upgradation.')) {
+              cy.contains('Consider for Auto Upgradation.').click()
+
+            }
           })
+
+
+
 
 
 
