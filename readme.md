@@ -133,7 +133,7 @@
 
 
 
-- You can configure your IRCTC `username` , `password` in `cypress.env.json`
+- You can configure your IRCTC `USERNAME` , `password` in `cypress.env.json`
 
 > [!TIP]
 > If you wish to enter **CAPTCHA** manually, then change `MANUAL_CAPTCHA` to `true` in `cypress.env.json`
@@ -145,6 +145,8 @@
     "MANUAL_CAPTCHA": false
 }
 ```
+# Running This On Github System (No Installation Required Easy 5 Minute Steps)... ?
+Follow The Guide -> https://github.com/shivamguys/irctc-cypress-automation/discussions/38
 
 
 # Running This On Your System... ?
