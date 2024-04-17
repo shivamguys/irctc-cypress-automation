@@ -140,8 +140,8 @@
 
 ```
 {
-    "username": "yourusername",
-    "password": "yourpassword",
+    "USERNAME": "yourusername",
+    "PASSWORD": "yourpassword",
     "MANUAL_CAPTCHA": false
 }
 ```
