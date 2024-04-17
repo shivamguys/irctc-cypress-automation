@@ -236,6 +236,8 @@ describe('IRCTC TATKAL BOOKING', () => {
             // Clicking Pay And book
             cy.get('.btn').click()
 
+            // Changing Viewport To Phone For Paytm as causing issues sometimes rendering
+            cy.viewport(460, 760)
 
             cy.intercept("/theia/processTransaction?orderid=*").as("payment")
 
