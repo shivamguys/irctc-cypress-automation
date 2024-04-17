@@ -114,7 +114,7 @@ function performLogin(LOGGED_IN) {
 }
 
 
-let MAX_ATTEMPT = 200
+let MAX_ATTEMPT = 100
 // function to solveCaptcha after logging in
 
 
@@ -123,7 +123,7 @@ function solveCaptcha() {
     MAX_ATTEMPT -= 1
     cy.wrap(MAX_ATTEMPT, { timeout: 10000 }).should('be.gt', 0);
 
-    cy.task("log", "Calling solveCaptcha() nth time")
+    cy.task("log", `Calling solveCaptcha() ${MAX_ATTEMPT}th time`)
 
     cy.wait(500)
     cy.get('body').should('be.visible').then((el) => {
