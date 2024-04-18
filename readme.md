@@ -34,9 +34,10 @@
 
 ## Features it has right now?
 
--  ✓ Can book **Tatkal** and **Normal Tickets** as well.
+-  ✓ Can book **Tatkal**, **Premium Tatkal** and **Normal Tickets** as well.
 -  ✓ Can book tickets for you if you open even **2-3 minutes** before tatkal time.
 -  ✓ Signing in with your **username** and **password**.
+-  ✓ **Auto Upgradation Enabled**.
 -  ✓ Filling Captchas and retrying untill success.
 -  ✓ Support for **Food Choices**, **Seats Preferences**.
 -  ✓ Will Book only if confirm berths are alloted.
@@ -57,6 +58,10 @@
 
 
 
+> [!NOTE] 
+> ```
+> At a time either Tatkal Or Premium Tatkal can be -> true <- not both.
+> ```
 ```
 {
   "TRAIN_NO": "12318",
@@ -66,6 +71,7 @@
   "BOARDING_STATION": null, <-- Change to full station name if required, else leave null
   "DESTINATION_STATION": "BSB",
   "TATKAL": true,
+  "PREMIUM_TATKAL": false,
   "UPI_ID_CONFIG": "",
   "PASSENGER_DETAILS": [
     {
@@ -103,6 +109,7 @@
   "BOARDING_STATION": null, <-- Change to full station name if required, else leave null
   "DESTINATION_STATION": "BSB",
   "TATKAL": true,
+   "PREMIUM_TATKAL": false,
   "UPI_ID_CONFIG": "",
   "PASSENGER_DETAILS": [
     {
@@ -171,15 +178,15 @@ npm -v # should print `10.5.0`
 
 ```
 
-### After NodeJs and Npm Installation, its time for you to install python and pip3 on your system.
+### After NodeJs and Npm Installation, its time for you to install python and pip on your system.
 ### After Python Installation Follow Below Steps.......
-##### In Case You Want To Install Pip3 here's the command to install in Linux
+##### In Case You Want To Install Pip here's the command to install in Linux
 ```sudo apt-get install python3-pip -y```
 
 
-#### After Pip3 Installation you can install all requirements by pasting below command.
+#### After Pip Installation you can install all requirements by pasting below command.
 ```
-pip3 install -r irctc-captcha-solver/requirements.txt # <---- Make Sure You Run This Command From Code Folder. 
+pip install -r irctc-captcha-solver/requirements.txt # <---- Make Sure You Run This Command From Code Folder. 
 ```
 
 #### Check If Everything Works Fine.... 

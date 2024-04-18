@@ -1,18 +1,25 @@
 {
   "TRAIN_NO": "12559",
   "TRAIN_COACH": "SL",
-  "TRAVEL_DATE": "18/04/2024",
+  "TRAVEL_DATE": "18/05/2024",
   "SOURCE_STATION": "BSBS",
   "BOARDING_STATION": null,
   "DESTINATION_STATION": "NDLS",
   "TATKAL": false,
-  "PREMIUM_TATKAL": true,
+  "PREMIUM_TATKAL": false,
   "UPI_ID_CONFIG": "",
   "PASSENGER_DETAILS": [
     {
       "NAME": "Shivam Pandey",
       "AGE": 26,
       "GENDER": "Male",
+      "SEAT": "No Preference",
+      "FOOD": "No Food"
+    },
+    {
+      "NAME": "Random name",
+      "AGE": 26,
+      "GENDER": "Female",
       "SEAT": "No Preference",
       "FOOD": "No Food"
     }
