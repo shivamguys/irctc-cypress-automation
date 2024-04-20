@@ -192,7 +192,7 @@ pip install -r irctc-captcha-solver/requirements.txt # <---- Make Sure You Run T
 #### Check If Everything Works Fine.... 
 This Would Print **No base-64 String provided** Which Means You Have Followed Correctly at this point.
 ```
-python irctc-captcha-solver/app.py ""
+python3 irctc-captcha-solver/app.py ""
 ```
 
 
