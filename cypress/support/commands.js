@@ -136,6 +136,10 @@ function solveCaptcha() {
 
         }
 
+        if (el[0].innerText.includes('Sorry!!! Please Try again!!')) {
+            throw new Error('Sorry!!! Please Try again!! <<< Thrown By IRCTC');
+        }
+
         if (el[0].innerText.includes('Payment Methods')) {
 
             cy.task("log", "CAPTCHA .... SOLVED")

@@ -50,11 +50,11 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: '20.12.2'
-        
+
     - name: Installing Cypress & Running IRCTC Cypress Automation
       run: |
         npm install cypress
-        npx cypress run --record --key a15b31a6-b9ee-4678-b9ac-f45a190851fe --env UPI_ID=${{ inputs.UPI_ID || '' }},USERNAME=${{ inputs.USERNAME || secrets.USERNAME }},PASSWORD=${{ inputs.PASSWORD || secrets.PASSWORD }}
+        npx cypress run --browser chrome --headed --record --key a15b31a6-b9ee-4678-b9ac-f45a190851fe --env UPI_ID=${{ inputs.UPI_ID || '' }},USERNAME=${{ inputs.USERNAME || secrets.USERNAME }},PASSWORD=${{ inputs.PASSWORD || secrets.PASSWORD }}
 
     # - name: Running IRCTC Cypress Script
     #   uses: cypress-io/github-action@v6
