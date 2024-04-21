@@ -1,6 +1,6 @@
 {
   "name": "irctc-cypress-automation",
-  "version": "3.0.1",
+  "version": "3.0.3",
   "description": "IRCTC Ticket Booking",
   "scripts": {
     "test": "cypress run"
