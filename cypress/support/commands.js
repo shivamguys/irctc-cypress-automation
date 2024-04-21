@@ -114,7 +114,7 @@ function performLogin(LOGGED_IN) {
 }
 
 
-let MAX_ATTEMPT = 100
+let MAX_ATTEMPT = 120
 // function to solveCaptcha after logging in
 
 
@@ -127,6 +127,15 @@ function solveCaptcha() {
 
     cy.wait(500)
     cy.get('body').should('be.visible').then((el) => {
+
+        if (el[0].innerText.includes('Unable to process current transaction') && el[0].innerText.includes('Payment Mode')) {
+
+            cy.task("log", "Unable to process current transaction...")
+            cy.get('.train_Search').click()
+            cy.wait(1000)
+
+        }
+
         if (el[0].innerText.includes('Payment Methods')) {
 
             cy.task("log", "CAPTCHA .... SOLVED")
