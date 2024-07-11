@@ -61,7 +61,7 @@ function performLogin(LOGGED_IN) {
                     cy.get('.captcha-img').invoke('attr', 'src').then((value) => {
                         // api call to retrieve captcha value
 
-                        cy.exec(`python irctc-captcha-solver/app.py "${value}"`).then((result) => {
+                        cy.exec(`python3 irctc-captcha-solver/app.py "${value}"`).then((result) => {
                             cy.get('#captcha').clear().type(result.stdout).type('{enter}');
                             // cy.contains('SIGN IN').click()
 
@@ -251,8 +251,8 @@ function BOOK_UNTIL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO, TATKAL
                         if (div[0].innerText.includes(TRAIN_NO) && div[0].innerText.includes(TRAIN_COACH)) {
 
                             cy.wrap(div).contains(TRAIN_COACH).click()
-                            cy.get(`:nth-child(${index + 1}) > .bull-back > app-train-avl-enq > :nth-child(1) > :nth-child(7) > :nth-child(1)`).contains(formatDate(TRAVEL_DATE)).click()
-                            cy.get(`:nth-child(${index + 1}) > .bull-back > app-train-avl-enq > [style="padding-top: 10px; padding-bottom: 20px;"]`).contains('Book Now').click()
+                            cy.get(`:nth-child(${index + 2}) > .bull-back > app-train-avl-enq > :nth-child(1) > :nth-child(7) > :nth-child(1)`).contains(formatDate(TRAVEL_DATE)).click()
+                            cy.get(`:nth-child(${index + 2}) > .bull-back > app-train-avl-enq > [style="padding-top: 10px; padding-bottom: 20px;"]`).contains('Book Now').click()
                             BOOK_UNTIL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO, TATKAL)
 
                         }
@@ -286,8 +286,8 @@ function BOOK_UNTIL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO, TATKAL
                     if (div[0].innerText.includes(TRAIN_NO) && div[0].innerText.includes(TRAIN_COACH)) {
 
                         cy.wrap(div).contains(TRAIN_COACH).click()
-                        cy.get(`:nth-child(${index + 1}) > .bull-back > app-train-avl-enq > :nth-child(1) > :nth-child(7) > :nth-child(1)`).contains(formatDate(TRAVEL_DATE)).click()
-                        cy.get(`:nth-child(${index + 1}) > .bull-back > app-train-avl-enq > [style="padding-top: 10px; padding-bottom: 20px;"]`).contains('Book Now').click()
+                        cy.get(`:nth-child(${index + 2}) > .bull-back > app-train-avl-enq > :nth-child(1) > :nth-child(7) > :nth-child(1)`).contains(formatDate(TRAVEL_DATE)).click()
+                        cy.get(`:nth-child(${index + 2}) > .bull-back > app-train-avl-enq > [style="padding-top: 10px; padding-bottom: 20px;"]`).contains('Book Now').click()
                         BOOK_UNTIL_TATKAL_OPENS(div, TRAIN_COACH, TRAVEL_DATE, TRAIN_NO, TATKAL)
 
                     }

@@ -41,6 +41,12 @@ describe('IRCTC TATKAL BOOKING', () => {
     // Submitting captcha block starts........
     cy.submitCaptcha().then(() => {
 
+      // closing the last transaction details
+      cy.get('body').then((el) => {
+        if (el[0].innerText.includes('Your Last Transaction')) {
+          cy.get('.ui-dialog-footer > .ng-tns-c19-3 > .text-center > .btn').click()
+        }
+    })
 
       // from station
       cy.get('.ui-autocomplete > .ng-tns-c57-8').should('be.visible').type(SOURCE_STATION, { delay: 600 })
