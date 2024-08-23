@@ -34,8 +34,8 @@ describe('IRCTC TATKAL BOOKING', () => {
     const isValidUpiId = upiRegex.test(UPI_ID);
 
     cy.get('.h_head1 > .search_btn').click()
-    cy.get(':nth-child(1) > .form-control').invoke('val', username).trigger('input')
-    cy.get(':nth-child(2) > .form-control').invoke('val', password).trigger('input')
+    cy.get('input[placeholder="User Name"]').invoke('val', username).trigger('input')
+    cy.get('input[placeholder="Password"]').invoke('val', password).trigger('input')
 
 
     // Submitting captcha block starts........

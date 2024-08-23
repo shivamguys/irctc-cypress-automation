@@ -61,7 +61,7 @@ function performLogin(LOGGED_IN) {
                     cy.get('.captcha-img').invoke('attr', 'src').then((value) => {
                         // api call to retrieve captcha value
 
-                        cy.exec(`python3 irctc-captcha-solver/app.py "${value}"`).then((result) => {
+                        cy.exec(`python irctc-captcha-solver/app.py "${value}"`).then((result) => {
                             cy.get('#captcha').clear().type(result.stdout).type('{enter}');
                             // cy.contains('SIGN IN').click()
 
