@@ -67,7 +67,7 @@ function performLogin(LOGGED_IN) {
                                 // api call to retrieve captcha value
 
                                 cy.exec(
-                                    `py irctc-captcha-solver/app.py "${value}"`
+                                    `python3 irctc-captcha-solver/app.py "${value}"`
                                 ).then((result) => {
                                     cy.get("#captcha")
                                         .clear()
@@ -111,7 +111,7 @@ function solveCaptcha() {
     MAX_ATTEMPT -= 1;
     cy.wrap(MAX_ATTEMPT, { timeout: 10000 }).should("be.gt", 0);
 
-    cy.task("log", `Calling solveCaptcha() ${MAX_ATTEMPT}th time`);
+    // cy.task("log", `Calling solveCaptcha() ${MAX_ATTEMPT}th time`);
 
     cy.wait(500);
     cy.get("body")
@@ -123,7 +123,7 @@ function solveCaptcha() {
                 ) &&
                 el[0].innerText.includes("Payment Mode")
             ) {
-                cy.task("log", "Unable to process current transaction...");
+                // cy.task("log", "Unable to process current transaction...");
                 cy.get(".train_Search").click();
                 cy.wait(1000);
             }
@@ -135,7 +135,7 @@ function solveCaptcha() {
             }
 
             if (el[0].innerText.includes("Payment Methods")) {
-                cy.task("log", "CAPTCHA .... SOLVED");
+                // cy.task("log", "CAPTCHA .... SOLVED");
                 return;
             }
 
@@ -156,7 +156,7 @@ function solveCaptcha() {
                     cy.get("#captcha").focus();
                     cy.get("body").then((el) => {
                         if (el[0].innerText.includes("Payment Methods")) {
-                            cy.task("log", "Bypassed Captcha");
+                            // cy.task("log", "Bypassed Captcha");
                         }
                     });
                 } else {
@@ -166,7 +166,7 @@ function solveCaptcha() {
                         .then((value) => {
                             // api call to retrieve captcha value
                             cy.exec(
-                                `python irctc-captcha-solver/app.py "${value}"`
+                                `python3 irctc-captcha-solver/app.py "${value}"`
                             ).then((result) => {
                                 cy.get("#captcha")
                                     .clear()
@@ -210,7 +210,7 @@ function BOOK_UNTIL_TATKAL_OPENS(
 
     if (TATKAL && !hasTatkalAlreadyOpened(TRAIN_COACH)) {
         // wait for exact time
-        cy.task("log", "Waiting for the exact time of opening of TATKAL...");
+        // cy.task("log", "Waiting for the exact time of opening of TATKAL...");
         const exactTimeToOpen = tatkalOpenTimeForToday(TRAIN_COACH);
         cy.get("div.h_head1", { timeout: 300000 }).should(
             "include.text",
@@ -253,6 +253,7 @@ function BOOK_UNTIL_TATKAL_OPENS(
                                         div[0].innerText.includes(TRAIN_NO) &&
                                         div[0].innerText.includes(TRAIN_COACH)
                                     ) {
+                                        console.log(index,"index no -<<<<<<<<<<<<<<<<<,")
                                         cy.wrap(div)
                                             .contains(TRAIN_COACH)
                                             .click();
@@ -264,6 +265,7 @@ function BOOK_UNTIL_TATKAL_OPENS(
                                         cy.get(
                                             `:nth-child(n) > .bull-back > app-train-avl-enq > [style="padding-top: 10px; padding-bottom: 20px;"]`
                                         )
+                                        // :nth-child(8) > .form-group > app-train-avl-enq > [style="padding-top: 10px; padding-bottom: 20px;"] > [style="overflow-x: auto;"] > .pull-left > :nth-child(1) > .train_Search
                                             .contains("Book Now")
                                             .click();
                                         BOOK_UNTIL_TATKAL_OPENS(
@@ -317,9 +319,20 @@ function BOOK_UNTIL_TATKAL_OPENS(
                                 .click();
                             cy.get(
                                 `:nth-child(n) > .bull-back > app-train-avl-enq > [style="padding-top: 10px; padding-bottom: 20px;"]`
-                            )
-                                .contains("Book Now")
-                                .click();
+                            ).then((elements) => {
+                                elements.each((i, el) => {
+                                  // Check if the div contains the ₹ symbol
+                                  if (el.innerText.includes("₹")) {
+                                    console.log(`Found ₹ in Div ${i + 1}:`, el.innerText); // Log the matching div
+                                    // Click the "Book Now" button inside this div
+                                    cy.wrap(el).contains("Book Now").click();
+                                  }
+                                });
+                            });
+                            // .contains("Book Now")
+                            // .should('be.visible') // Ensure it's visible
+                            // .and('not.be.disabled') // Ensure it's not disabled
+                            // .click();
                             BOOK_UNTIL_TATKAL_OPENS(
                                 div,
                                 TRAIN_COACH,
