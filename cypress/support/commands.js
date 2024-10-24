@@ -67,7 +67,7 @@ function performLogin(LOGGED_IN) {
                                 // api call to retrieve captcha value
 
                                 cy.exec(
-                                    `python3 irctc-captcha-solver/app.py "${value}"`
+                                    `py irctc-captcha-solver/app.py "${value}"`
                                 ).then((result) => {
                                     cy.get("#captcha")
                                         .clear()
@@ -166,7 +166,7 @@ function solveCaptcha() {
                         .then((value) => {
                             // api call to retrieve captcha value
                             cy.exec(
-                                `python3 irctc-captcha-solver/app.py "${value}"`
+                                `py irctc-captcha-solver/app.py "${value}"`
                             ).then((result) => {
                                 cy.get("#captcha")
                                     .clear()
