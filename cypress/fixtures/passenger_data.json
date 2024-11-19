@@ -1,18 +1,25 @@
 {
-  "TRAIN_NO": "12533",
-  "TRAIN_COACH": "SL",
-  "TRAVEL_DATE": "08/12/2024",
-  "SOURCE_STATION": "LJN",
+  "TRAIN_NO": "13185",
+  "TRAIN_COACH": "3A",
+  "TRAVEL_DATE": "24/08/2024",
+  "SOURCE_STATION": "SDAH",
   "BOARDING_STATION": null,
-  "DESTINATION_STATION": "KYN",
-  "TATKAL": false,
+  "DESTINATION_STATION": "DBG",
+  "TATKAL": true,
   "PREMIUM_TATKAL": false,
-  "UPI_ID_CONFIG": "ds.pratap1997-1@oksbi",
+  "UPI_ID_CONFIG": "",
   "PASSENGER_DETAILS": [
     {
-      "NAME": "TRIPURARI SINGH",
-      "AGE": 59,
+      "NAME": "Shivam Pandey",
+      "AGE": 26,
       "GENDER": "Male",
+      "SEAT": "No Preference",
+      "FOOD": "No Food"
+    },
+    {
+      "NAME": "Shivam Dubey",
+      "AGE": 26,
+      "GENDER": "Female",
       "SEAT": "No Preference",
       "FOOD": "No Food"
     }
