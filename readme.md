@@ -207,6 +207,7 @@ python irctc-captcha-solver/app.py ""
 
 ```
 npm install # <---- Make Sure You Run This Command From Code Folder. 
+python app-server.py --host 0.0.0.0 --port 5000 <-------- Run the flask server for faster captcha if you want or else you can proceed with the ususal way
 npx cypress run --headed --no-exit # <---- Make Sure You Run This Command From Code Folder. 
 ```
 
