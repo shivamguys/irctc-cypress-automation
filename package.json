@@ -14,7 +14,8 @@
   "dependencies": {
     "cypress": "13.7.1",
     "dayjs": "^1.11.10",
-    "fs.promises": "^0.1.2"
+    "fs.promises": "^0.1.2",
+    "wait-on": "^8.0.1"
   },
   "devDependencies": {
     "concurrently": "^9.1.0"
