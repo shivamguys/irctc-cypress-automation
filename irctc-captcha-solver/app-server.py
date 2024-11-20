@@ -46,6 +46,10 @@ def extract_text():
   extracted_text = extract_text_from_image(base64_image)
   return jsonify({"extracted_text": extracted_text})
 
+@app.route('/')
+def health_check():
+  return "Server is running", 200
+
 if __name__ == "__main__":
   parser = argparse.ArgumentParser(
       description="Run the OCR extraction server."
