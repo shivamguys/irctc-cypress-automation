@@ -7,8 +7,7 @@ import {
 const MANUAL_CAPTCHA = Cypress.env("MANUAL_CAPTCHA");
 
 Cypress.on("uncaught:exception", (err, runnable) => {
-    // returning false here prevents Cypress from
-    // failing the test
+    // returning false here prevents Cypress from failing the test
     return false;
 });
 
@@ -35,168 +34,144 @@ Cypress.Commands.add(
 );
 
 function performLogin(LOGGED_IN) {
-    // if starts
     if (!LOGGED_IN) {
         cy.wait(500);
 
         cy.get("body")
-            .should("be.visible")
-            .then((el) => {
-                if (el[0].innerText.includes("Logout")) {
-                    cy.task(
-                        "log",
-                        "We have logged in successfully at this stage"
-                    );
-                } else if (
-                    el[0].innerText.includes("FORGOT ACCOUNT DETAILS") &&
-                    !el[0].innerText.includes("Please Wait...")
-                ) {
-                    if (MANUAL_CAPTCHA) {
-                        cy.get("#captcha").focus();
-                        // wait for user to manually enter captcha and login
-                        cy.get(".search_btn.loginText")
-                            .should("include.text", "Logout")
-                            .then(() => {
-                                performLogin(true);
-                            });
-                    } else {
-                        // get captcha value base64 starts---------
-                        cy.get(".captcha-img")
-                            .invoke("attr", "src")
-                            .then((value) => {
-                                // api call to retrieve captcha value
-
-                                cy.exec(
-                                    `py irctc-captcha-solver/app.py "${value}"`
-                                ).then((result) => {
-                                    cy.get("#captcha")
-                                        .clear()
-                                        .type(result.stdout)
-                                        .type("{enter}");
-                                    // cy.contains('SIGN IN').click()
-
-                                    cy.get("body").then((el) => {
-                                        if (
-                                            el[0].innerText.includes(
-                                                "Invalid Captcha"
-                                            )
-                                        ) {
-                                            performLogin(false);
-                                        } else if (
-                                            el[0].innerText.includes("Logout")
-                                        ) {
-                                            performLogin(true);
-                                        } else {
-                                            performLogin(false);
-                                        }
-                                    });
-                                });
-                                // api call to retrieve captcha value
-                            });
-                        // get captcha value base64 ends---------
-                    }
+        .should("be.visible")
+        .then((el) => {
+            if (el[0].innerText.includes("Logout")) {
+                cy.task("log", "We have logged in successfully at this stage");
+            } else if (
+                el[0].innerText.includes("FORGOT ACCOUNT DETAILS") &&
+                !el[0].innerText.includes("Please Wait...")
+            ) {
+                if (MANUAL_CAPTCHA) {
+                    cy.get("#captcha").focus();
+                    // Wait for user to manually enter captcha and login
+                    cy.get(".search_btn.loginText")
+                    .should("include.text", "Logout")
+                    .then(() => {
+                        performLogin(true);
+                    });
                 } else {
-                    performLogin(false);
+                    // Use the local server to solve the captcha
+                    cy.get(".captcha-img")
+                    .invoke("attr", "src")
+                    .then((value) => {
+                        // API call to retrieve captcha value
+                        cy.request({
+                            method: "POST",
+                            url: "http://localhost:5000/extract-text", // URL of the Flask server endpoint
+                            body: {
+                                image: value, // Assuming `value` is your base64 image string
+                            },
+                        }).then((response) => {
+                            const extractedText = response.body.extracted_text; // Access the extracted text from the server response
+                            cy.get("#captcha")
+                            .clear()
+                            .type(extractedText)
+                            .type("{enter}");
+
+                            cy.get("body").then((el) => {
+                                if (el[0].innerText.includes("Invalid Captcha")) {
+                                    performLogin(false);
+                                } else if (el[0].innerText.includes("Logout")) {
+                                    performLogin(true);
+                                } else {
+                                    performLogin(false);
+                                }
+                            });
+                        });
+                    });
                 }
-            });
+            } else {
+                performLogin(false);
+            }
+        });
     }
-    // if ends
 }
 
 let MAX_ATTEMPT = 120;
 // function to solveCaptcha after logging in
 
 function solveCaptcha() {
-    // Max attempt for this function to fail
     MAX_ATTEMPT -= 1;
     cy.wrap(MAX_ATTEMPT, { timeout: 10000 }).should("be.gt", 0);
 
-    // cy.task("log", `Calling solveCaptcha() ${MAX_ATTEMPT}th time`);
-
     cy.wait(500);
     cy.get("body")
-        .should("be.visible")
-        .then((el) => {
-            if (
-                el[0].innerText.includes(
-                    "Unable to process current transaction"
-                ) &&
-                el[0].innerText.includes("Payment Mode")
-            ) {
-                // cy.task("log", "Unable to process current transaction...");
-                cy.get(".train_Search").click();
-                cy.wait(1000);
-            }
+    .should("be.visible")
+    .then((el) => {
+        if (
+            el[0].innerText.includes(
+                "Unable to process current transaction"
+            ) &&
+            el[0].innerText.includes("Payment Mode")
+        ) {
+            cy.get(".train_Search").click();
+            cy.wait(1000);
+        }
 
-            if (el[0].innerText.includes("Sorry!!! Please Try again!!")) {
-                throw new Error(
-                    "Sorry!!! Please Try again!! <<< Thrown By IRCTC"
-                );
-            }
+        if (el[0].innerText.includes("Sorry!!! Please Try again!!")) {
+            throw new Error("Sorry!!! Please Try again!! <<< Thrown By IRCTC");
+        }
 
-            if (el[0].innerText.includes("Payment Methods")) {
-                // cy.task("log", "CAPTCHA .... SOLVED");
-                return;
-            }
+        if (el[0].innerText.includes("Payment Methods")) {
+            return;
+        }
 
-            if (el[0].innerText.includes("No seats available")) {
-                cy.fail(
-                    "Further execution stopped because there are no more tickets."
-                );
-            }
+        if (el[0].innerText.includes("No seats available")) {
+            cy.fail("Further execution stopped because there are no more tickets.");
+        }
 
-            // Check whether we are at reviewBooking stage or not if yes keep on solving captcha
-
-            if (
-                el[0].innerText.includes("Your ticket will be sent to") &&
-                !el[0].innerText.includes("Please Wait...") &&
-                el[0].innerHTML.includes("Enter Captcha")
-            ) {
-                if (MANUAL_CAPTCHA) {
-                    cy.get("#captcha").focus();
-                    cy.get("body").then((el) => {
-                        if (el[0].innerText.includes("Payment Methods")) {
-                            // cy.task("log", "Bypassed Captcha");
-                        }
-                    });
-                } else {
-                    // get captcha value base64 starts---------
-                    cy.get(".captcha-img")
-                        .invoke("attr", "src")
-                        .then((value) => {
-                            // api call to retrieve captcha value
-                            cy.exec(
-                                `py irctc-captcha-solver/app.py "${value}"`
-                            ).then((result) => {
-                                cy.get("#captcha")
-                                    .clear()
-                                    .type(result.stdout)
-                                    .type("{enter}");
-                                cy.get("body").then((el) => {
-                                    if (
-                                        el[0].innerText.includes(
-                                            "Payment Methods"
-                                        )
-                                    ) {
-                                        cy.task("log", "Bypassed Captcha");
-                                    } else {
-                                        solveCaptcha();
-                                    }
-                                });
-                            });
-                            // api call to retrieve captcha value
-                        });
-                    // get captcha value base64 ends---------
-
-                    // recursing until captcha gets solved
-                    solveCaptcha();
-                }
-            } else if (el[0].innerText.includes("Payment Methods")) {
-                return;
+        if (
+            el[0].innerText.includes("Your ticket will be sent to") &&
+            !el[0].innerText.includes("Please Wait...") &&
+            el[0].innerHTML.includes("Enter Captcha")
+        ) {
+            if (MANUAL_CAPTCHA) {
+                cy.get("#captcha").focus();
+                cy.get("body").then((el) => {
+                    if (el[0].innerText.includes("Payment Methods")) {
+                        cy.task("log", "Bypassed Captcha");
+                    }
+                });
             } else {
+                cy.get(".captcha-img")
+                .invoke("attr", "src")
+                .then((value) => {
+                    // Use the local server to solve the captcha
+                    cy.request({
+                        method: "POST",
+                        url: "http://localhost:5000/extract-text", // URL of the Flask server endpoint
+                        body: {
+                            image: value, // Assuming `value` is your base64 image string
+                        },
+                    }).then((response) => {
+                        const extractedText = response.body.extracted_text;
+                        cy.get("#captcha")
+                        .clear()
+                        .type(extractedText)
+                        .type("{enter}");
+
+                        cy.get("body").then((el) => {
+                            if (el[0].innerText.includes("Payment Methods")) {
+                                cy.task("log", "Bypassed Captcha");
+                            } else {
+                                solveCaptcha();
+                            }
+                        });
+                    });
+                });
                 solveCaptcha();
             }
-        });
+        } else if (el[0].innerText.includes("Payment Methods")) {
+            return;
+        } else {
+            solveCaptcha();
+        }
+    });
 }
 
 function BOOK_UNTIL_TATKAL_OPENS(

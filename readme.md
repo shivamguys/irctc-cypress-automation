@@ -199,7 +199,19 @@ pip install -r irctc-captcha-solver/requirements.txt # <---- Make Sure You Run T
 #### Check If Everything Works Fine.... 
 This Would Print **No base-64 String provided** Which Means You Have Followed Correctly at this point.
 ```
-python irctc-captcha-solver/app.py ""
+python irctc-captcha-solver/app-server.py --host 0.0.0.0 --port 5001
+```
+Then run the curl to see if the captcha server is responding fine.
+```
+$ curl -X POST "http://localhost:5001/extract-text"      
+-H "Content-Type: application/json"      
+-d '{
+     "image": ""
+    }'
+```
+You should get below output.
+```
+{"error":"No base64 image string provided"}
 ```
 
 
@@ -207,6 +219,6 @@ python irctc-captcha-solver/app.py ""
 
 ```
 npm install # <---- Make Sure You Run This Command From Code Folder. 
-npx cypress run --headed --no-exit # <---- Make Sure You Run This Command From Code Folder. 
+npm run start-booking <---------- This will first bring up captha server then starts booking 
 ```
 
