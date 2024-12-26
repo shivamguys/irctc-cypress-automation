@@ -148,6 +148,7 @@ describe('IRCTC TATKAL BOOKING', () => {
               // Check if the passenger object contains 'NAME' property
               if (PASSENGER && PASSENGER['NAME']) {
                 cy.task("log", 'Passenger Filing STARTED......')
+                cy.wait(2000)
                 // Clear the input field and set its value to the passenger's name
                 cy.wrap(inputField).clear().type(PASSENGER['NAME']);
               } else {
