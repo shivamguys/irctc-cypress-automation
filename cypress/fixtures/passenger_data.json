@@ -1,18 +1,19 @@
 {
-  "TRAIN_NO": "12274",
-  "TRAIN_COACH": "SL",
-  "TRAVEL_DATE": "19/03/2024",
-  "SOURCE_STATION": "NDLS",
+  "TRAIN_NO": "22434",
+  "TRAIN_COACH": "3A",
+  "TRAVEL_DATE": "30/10/2024",
+  "SOURCE_STATION": "ANVT",
   "BOARDING_STATION": null,
-  "DESTINATION_STATION": "PNBE",
-  "TATKAL": false,
-  "UPI_ID": "",
+  "DESTINATION_STATION": "GZB",
+  "TATKAL": true,
+  "PREMIUM_TATKAL": false,
+  "UPI_ID_CONFIG": "",
   "PASSENGER_DETAILS": [
     {
       "NAME": "Shivam Pandey",
       "AGE": 26,
       "GENDER": "Male",
-      "SEAT": "Side Lower",
+      "SEAT": "No Preference",
       "FOOD": "No Food"
     }
   ],
