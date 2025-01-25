@@ -6,8 +6,15 @@ import base64
 import easyocr
 from flask import Flask, request, jsonify
 
+from PIL import Image as pil
+from pkg_resources import parse_version
+
+if parse_version(pil.__version__)>=parse_version('10.0.0'):
+    Image.ANTIALIAS=Image.LANCZOS
+
 # Initialize EasyOCR Reader
 reader = easyocr.Reader(["en"], model_storage_directory="./EasyOCR")
+
 
 # Initialize Flask app
 app = Flask(__name__)
