@@ -1,25 +1,25 @@
 {
-  "TRAIN_NO": "13185",
-  "TRAIN_COACH": "3A",
-  "TRAVEL_DATE": "24/08/2024",
-  "SOURCE_STATION": "SDAH",
+  "TRAIN_NO": "12797",
+  "TRAIN_COACH": "SL",
+  "TRAVEL_DATE": "26/01/2025",
+  "SOURCE_STATION": "KCG",
   "BOARDING_STATION": null,
-  "DESTINATION_STATION": "DBG",
+  "DESTINATION_STATION": "TPTY",
   "TATKAL": true,
   "PREMIUM_TATKAL": false,
-  "UPI_ID_CONFIG": "",
+  "UPI_ID_CONFIG": "9182698217@ptsbi",
   "PASSENGER_DETAILS": [
     {
-      "NAME": "Shivam Pandey",
-      "AGE": 26,
+      "NAME": "Nitish pala",
+      "AGE": 23,
       "GENDER": "Male",
       "SEAT": "No Preference",
       "FOOD": "No Food"
     },
     {
-      "NAME": "Shivam Dubey",
-      "AGE": 26,
-      "GENDER": "Female",
+      "NAME": "Sampath yadhav",
+      "AGE": 21,
+      "GENDER": "Male",
       "SEAT": "No Preference",
       "FOOD": "No Food"
     }

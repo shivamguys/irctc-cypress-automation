@@ -50,7 +50,7 @@
   "UPI_ID_CONFIG": "",
   "PASSENGER_DETAILS": [
     {
-      "NAME": "SHIVAM PANDEY",
+      "NAME": "nitish pala",
       "AGE": 25,
       "GENDER": "Male",
       "SEAT": "Side Upper",
@@ -88,7 +88,7 @@
   "UPI_ID_CONFIG": "",
   "PASSENGER_DETAILS": [
     {
-      "NAME": "SHIVAM PANDEY",
+      "NAME": "nitish pala",
       "AGE": 26,
       "GENDER": "Male",
       "SEAT": "Side Upper",
