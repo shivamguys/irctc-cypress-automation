@@ -2,25 +2,19 @@ const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
   projectId: '7afdkj',
-
-  defaultCommandTimeout: 120000,
-  // video: true,
+  defaultCommandTimeout: 120000, // Extended timeout for commands
 
   e2e: {
-    setupNodeEvents(on, config) {
-      // implement node event listeners here
+    setupNodeEvents(on) {
       on('task', {
         log(message) {
-          // Then to see the log messages in the terminal
-          //   cy.task("log", "my message");
-          console.log(message + '\n\n');
+          console.log(message + '\n\n'); // Logs messages to the terminal
           return null;
         },
       });
     },
-    chromeWebSecurity: false,
-    experimentalModifyObstructiveThirdPartyCode: true
+    chromeWebSecurity: false, // Disable CORS security for testing
+    experimentalModifyObstructiveThirdPartyCode: true, // Allow Cypress to handle third-party scripts
+    experimentalSessionAndOrigin: true, // Enable multi-origin testing
   },
 });
-
-

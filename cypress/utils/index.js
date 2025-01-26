@@ -14,8 +14,8 @@ export const tatkalOpenTimings = {
     "1A": "10:00",
     "CC": "10:00",
     "EC": "10:00",
-    "2S": "11:00",
-    "SL": "11:00",
+    "2S": "8:00",
+    "SL": "8:00",
 }
 
 export const hasTatkalAlreadyOpened = (TRAIN_COACH) => {
