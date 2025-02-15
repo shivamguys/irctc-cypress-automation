@@ -3,7 +3,7 @@
   "version": "3.0.4",
   "description": "IRCTC Ticket Booking",
   "scripts": {
-    "start-captha-server": "python3 irctc-captcha-solver/app-server.py --host 0.0.0.0 --port 5000",
+    "start-captha-server": "python3 irctc-captcha-solver/app-server.py",
     "wait-for-captha-server-to-come-up": "wait-on http://localhost:5000",
     "start-irctc-booking": "cypress run --headed --no-exit",
     "start-booking": "concurrently \"npm run start-captha-server\" \"npm run wait-for-captha-server-to-come-up && npm run start-irctc-booking\"",
