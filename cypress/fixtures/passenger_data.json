@@ -1,26 +1,33 @@
 {
-  "TRAIN_NO": "13185",
-  "TRAIN_COACH": "3A",
-  "TRAVEL_DATE": "24/08/2024",
-  "SOURCE_STATION": "SDAH",
+  "TRAIN_NO": "12863",
+  "TRAIN_COACH": "3E",
+  "TRAVEL_DATE": "10/05/2025",
+  "SOURCE_STATION": "HWH",
   "BOARDING_STATION": null,
-  "DESTINATION_STATION": "DBG",
+  "DESTINATION_STATION": "SMVB",
   "TATKAL": true,
   "PREMIUM_TATKAL": false,
   "UPI_ID_CONFIG": "",
   "PASSENGER_DETAILS": [
     {
-      "NAME": "Shivam Pandey",
-      "AGE": 26,
+      "NAME": "SUDIP PAL",
+      "AGE": 30,
       "GENDER": "Male",
       "SEAT": "No Preference",
       "FOOD": "No Food"
     },
     {
-      "NAME": "Shivam Dubey",
-      "AGE": 26,
+      "NAME": "NABANITA PAL",
+      "AGE": 21,
       "GENDER": "Female",
       "SEAT": "No Preference",
+      "FOOD": "No Food"
+    },
+    {
+      "NAME": "SUMITRA PAL",
+      "AGE": 45,
+      "GENDER": "Female",
+      "SEAT": "Lower",
       "FOOD": "No Food"
     }
   ],
