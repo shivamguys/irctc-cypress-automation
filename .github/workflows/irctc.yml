@@ -1,8 +1,9 @@
 name: IRCTC Automation Booking
+
 on:
   push:
     branches:
-      - 'main'
+      - main
   pull_request:
   workflow_dispatch:
     inputs:
@@ -18,46 +19,59 @@ on:
         required: true
         type: string
         description: "Your UPI ID To Make Payment From"
+
 jobs:
   IRCTC-Booking:
     runs-on: ubuntu-22.04
 
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
-        cache: 'pip' # caching pip dependencies
-    - run: |
-        sudo timedatectl set-timezone Asia/Kolkata
-        pip install -r irctc-captcha-solver/requirements.txt
-        python3 irctc-captcha-solver/app.py "" # python3 irctc-captcha-solver/app.py "" is used for models to load before starting tatkal tickets 
-        PASSWORD=$(jq -r '.inputs.PASSWORD' $GITHUB_EVENT_PATH)
-        USERNAME=$(jq -r '.inputs.USERNAME' $GITHUB_EVENT_PATH)
-        UPI_ID=$(jq -r '.inputs.UPI_ID' $GITHUB_EVENT_PATH)
+      # Step 1 — Checkout repository
+      - uses: actions/checkout@v4
 
-        echo ::add-mask::$PASSWORD
-        echo ::add-mask::$USERNAME
-        echo ::add-mask::$UPI_ID
+      # Step 2 — Setup Python for Captcha solver
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
 
-        echo PASSWORD=$PASSWORD >> $GITHUB_ENV
-        echo USERNAME=$USERNAME >> $GITHUB_ENV
-        echo UPI_ID=$UPI_ID >> $GITHUB_ENV
+      # Step 3 — Install dependencies & start Captcha server
+      - name: Setup and Start Captcha OCR Server
+        run: |
+          sudo timedatectl set-timezone Asia/Kolkata
+          pip install -r irctc-captcha-solver/requirements.txt
 
+          # Start Flask OCR server (correct file name)
+          nohup python3 irctc-captcha-solver/app-server.py --host 0.0.0.0 --port 5001 &
 
-    # python3 irctc-captcha-solver/app.py "" is used for models to load before starting tatkal tickets 
+          # Wait for server to come up and verify
+          sleep 10
+          curl -X POST "http://localhost:5001/extract-text" \
+            -H "Content-Type: application/json" \
+            -d '{"image": ""}'
 
-    - name: Install Node.js and npm
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20.12.2'
+          # Load input values from workflow_dispatch
+          PASSWORD=$(jq -r '.inputs.PASSWORD' $GITHUB_EVENT_PATH)
+          USERNAME=$(jq -r '.inputs.USERNAME' $GITHUB_EVENT_PATH)
+          UPI_ID=$(jq -r '.inputs.UPI_ID' $GITHUB_EVENT_PATH)
 
-    - name: Installing Cypress & Running IRCTC Cypress Automation
-      run: |
-        npm install cypress
-        npx cypress run --browser chrome --headed --record --key a15b31a6-b9ee-4678-b9ac-f45a190851fe --env UPI_ID=${{ inputs.UPI_ID || '' }},USERNAME=${{ inputs.USERNAME || secrets.USERNAME }},PASSWORD=${{ inputs.PASSWORD || secrets.PASSWORD }}
+          echo ::add-mask::$PASSWORD
+          echo ::add-mask::$USERNAME
+          echo ::add-mask::$UPI_ID
 
-    # - name: Running IRCTC Cypress Script
-    #   uses: cypress-io/github-action@v6
-    #   with:
-    #     command: npx cypress run --record --key a15b31a6-b9ee-4678-b9ac-f45a190851fe --env UPI_ID=${{ inputs.UPI_ID || '' }},USERNAME=${{ inputs.USERNAME || secrets.USERNAME }},PASSWORD=${{ inputs.PASSWORD || secrets.PASSWORD }}
+          echo "PASSWORD=$PASSWORD" >> $GITHUB_ENV
+          echo "USERNAME=$USERNAME" >> $GITHUB_ENV
+          echo "UPI_ID=$UPI_ID" >> $GITHUB_ENV
+
+      # Step 4 — Setup Node.js & Cypress
+      - name: Install Node.js and npm
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.12.2'
+
+      # Step 5 — Install Cypress and run tests
+      - name: Installing Cypress & Running IRCTC Cypress Automation
+        run: |
+          npm ci
+          npx cypress verify
+          npx cypress run --browser chrome --headed \
+            --env UPI_ID=${{ inputs.UPI_ID || '' }},USERNAME=${{ inputs.USERNAME || secrets.USERNAME }},PASSWORD=${{ inputs.PASSWORD || secrets.PASSWORD }}
